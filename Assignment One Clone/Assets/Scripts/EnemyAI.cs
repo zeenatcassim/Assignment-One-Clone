@@ -254,57 +254,15 @@ public class EnemyAI : MonoBehaviour
         }
 
         //Combat a different error, it in the PATROL state and is stuck for some reason, find new walk point
-        if (rb.velocity == Vector2.zero)
-        {
-            walkPointSet = false;
-        }
+        /* if(rb.velocity == Vector2.zero)
+         {
+             walkPointSet = false;
+         }*/
     }
 
 
     public void SearchWalkPoint()
     {
-        /*//algorithm that will create our patterns hopefully
-        
-
-        //Back and forth creation
-        if(lastDirRay != 0)
-        {
-            //we have a walk pattern already set
-            //Back and Forth, i.e left and right i.e 2 && 4
-            //I could probably fit this whole thing into a function tbh
-            if(nextDirRay == 2)
-            {
-                //move to the left, find a point on the left/west
-                //RaycastHit2D hit = Physics2D.Raycast(transform.position,rayLeft,maxRCLength,whatIsWall);
-                RayPointer(nextDirRay);
-                nextDirRay = 4; 
-                
-
-            }
-            else if(nextDirRay == 4)
-            {
-                //move to the right, find a point on the right/east
-             
-                RayPointer(nextDirRay);
-                nextDirRay = 2;
-                
-            }
-            lastDirRay = nextDirRay;
-            walkPointSet = true;
-            
-            
-        }
-        else
-        {
-            Debug.Log("Else case has been called");
-            //abide by this pattern now
-            lastDirRay = 2;
-            nextDirRay = 4;
-            //start movement to the left
-            RayPointer(lastDirRay);
-            walkPointSet = true;
-           
-        }*/
 
         PatternSelect(walkPattern);
 
