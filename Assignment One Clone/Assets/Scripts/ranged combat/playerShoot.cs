@@ -6,12 +6,16 @@ public class playerShoot : MonoBehaviour
 {
     //picked up gun
     public pickUpGun picked;
+
     //firePoint - transform
     public Transform firePoint;
+
     //prefab - gameobject
     public GameObject projectilePrefab;
+
     //Firing speed - float
     public float firingSpeed;
+
     //nrOfRounds- int?
 
   //  public GameObject playerPos;
@@ -26,10 +30,9 @@ public class playerShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //distance
-        // Vector2 playPosition = new Vector2(playerPos.position)
+       
 
-        if (Input.GetButtonDown("Fire1") && picked.pickedUpGun == true) //picked up a gun
+        if (Input.GetMouseButtonDown(0) && picked.pickedUpGun == true) //picked up a gun
         {
             Shoot();
         }
@@ -54,5 +57,11 @@ public class playerShoot : MonoBehaviour
         {
             picked.pickedUpGun = false;
         }
+    }
+
+    void CalculateScore()
+    {
+        //distance
+        // Vector2 playPosition = new Vector2(playerPos.position)
     }
 }

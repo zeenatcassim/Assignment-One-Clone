@@ -1133,7 +1133,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.010765314, y: -0.034854144}
+  m_Offset: {x: -0.003333807, y: -0.034854487}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1144,7 +1144,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3660188, y: 2.045621}
+  m_Size: {x: 0.96473265, y: 0.8426446}
   m_EdgeRadius: 0
 --- !u!212 &1489908204
 SpriteRenderer:
@@ -1511,7 +1511,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 6
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -1610,6 +1610,7 @@ MonoBehaviour:
   gunPrefab: {fileID: 2923656917886416717, guid: 498ee2da3377088428fc3222eaf11c9c, type: 3}
   firePoint: {fileID: 1279278423}
   ammoAvailable: 5
+  interactionPointRadius: 1.75
 --- !u!114 &1763380400
 MonoBehaviour:
   m_ObjectHideFlags: 0
