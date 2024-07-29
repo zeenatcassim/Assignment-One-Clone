@@ -11,7 +11,7 @@ public class EnemyAI : MonoBehaviour
     //Declarations
     public Transform targetPosition;
     Vector2 worldPos;
-    Vector3 walkPoint;
+    public Vector3 walkPoint;
     [SerializeField] private float speeed;
     float speedFactor;
 
@@ -34,6 +34,9 @@ public class EnemyAI : MonoBehaviour
 
     //Layers
     public LayerMask whatIsPlayer, whatIsWall, whatIsComrade;
+
+    //Reference To Player, and FOVpivot
+    GameObject playerCharacter, viewPoint;
 
     //Distance Checks related to player detection
     public float sightRange, meleeRange;
@@ -95,7 +98,7 @@ public class EnemyAI : MonoBehaviour
             currentWayPoint = 0; //Counter set to zero in order to start traversal
             reachedEndOfPath = false; // 
 
-            Debug.Log("No error");
+            //Debug.Log("No error");
             processingDest = true; // a way to ensure we call the GetPath Once
 
         }
@@ -116,7 +119,7 @@ public class EnemyAI : MonoBehaviour
     }
 
 
-    public void InputInformation()
+/*    public void InputInformation()
     {
         //Debug.Log("We will get this position");
         mousePos = Input.mousePosition;
@@ -131,7 +134,7 @@ public class EnemyAI : MonoBehaviour
         GetPath();
 
     }
-
+*/
 
     public void MoveToTarget()
     {
@@ -146,7 +149,7 @@ public class EnemyAI : MonoBehaviour
         if (currentWayPoint + 1 >= path.vectorPath.Count)
         {
             reachedEndOfPath = true;
-            Debug.Log("IDEAL STOP");
+            //Debug.Log("IDEAL STOP");
 
             movementDirection = Vector2.zero;
 
@@ -225,7 +228,7 @@ public class EnemyAI : MonoBehaviour
         //if we have nowhere to walk to, and have to walk, find walk point
         if (!walkPointSet)
         {
-            Debug.Log("hould be searching");
+            //Debug.Log("should be searching");
             SearchWalkPoint();
             //SearchWalkPoint();
         }
@@ -240,6 +243,7 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 SetDestintion(walkPoint);
+                Debug.Log("Walk Point" + walkPoint);
             }
 
         }
@@ -263,7 +267,7 @@ public class EnemyAI : MonoBehaviour
 
     public void SearchWalkPoint()
     {
-
+        //Debug.Log("Searching for a walk point");
         PatternSelect(walkPattern);
 
     }
@@ -271,7 +275,7 @@ public class EnemyAI : MonoBehaviour
     public void Pat1BackAndForth()
     {
         //algorithm that will create our patterns hopefully
-
+        //Debug.Log("Pattern 1 is being called");
 
         //Back and forth creation
         if (lastDirRay != 0)
@@ -296,6 +300,15 @@ public class EnemyAI : MonoBehaviour
                 nextDirRay = 2;
 
             }
+
+            //a case for it being none of those specific values, basically allowing for a transition between walk patterns
+            else
+            {
+                RayPointer(nextDirRay);
+                nextDirRay = 2;
+            }
+
+
             lastDirRay = nextDirRay;
             walkPointSet = true;
 
@@ -336,6 +349,13 @@ public class EnemyAI : MonoBehaviour
                 nextDirRay = 1;
 
             }
+            //a case for it being none of those specific values, basically allowing for a transition between walk patterns
+            else
+            {
+                RayPointer(nextDirRay);
+                nextDirRay = 1;
+            }
+
             lastDirRay = nextDirRay;
             walkPointSet = true;
 
@@ -390,6 +410,13 @@ public class EnemyAI : MonoBehaviour
                 RayPointer(nextDirRay);
                 nextDirRay = 2;
             }
+
+            else
+            {
+                RayPointer(nextDirRay);
+                nextDirRay = 1;
+            }
+
             lastDirRay = nextDirRay;
             walkPointSet = true;
 
@@ -412,7 +439,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (patternIndex == 0)
         {
-            return;
+            Pat1BackAndForth();
         }
 
         if (patternIndex == 1)
@@ -445,38 +472,46 @@ public class EnemyAI : MonoBehaviour
 
     public void RayPointer(int rayIndex)
     {
+        //Debug.Log("Calling RAY POINTER");
+
         if (rayIndex == 1)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, rayUp, maxRCLength, whatIsWall);
-            if (hit.point != null)
+            if (hit.collider != null)
             {
                 walkPoint = hit.point;
             }
             else
             {
+                
                 Ray2D ray = new Ray2D(transform.position, rayUp);
+               
                 walkPoint = ray.GetPoint(infRayDist);
+               
             }
         }
 
         else if (rayIndex == 2)
         {
+            
             RaycastHit2D hit = Physics2D.Raycast(transform.position, rayLeft, maxRCLength, whatIsWall);
-            if (hit.point != null)
+            if (hit.collider != null)
             {
                 walkPoint = hit.point;
+                Debug.Log("HitPoint" + hit.point + " Ray direction :" + rayLeft);
             }
             else
             {
                 Ray2D ray = new Ray2D(transform.position, rayLeft);
                 walkPoint = ray.GetPoint(infRayDist);
+                Debug.Log("Ray point" + ray.GetPoint(infRayDist));
             }
         }
 
         else if (rayIndex == 3)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDown, maxRCLength, whatIsWall);
-            if (hit.point != null)
+            if (hit.collider != null)
             {
                 walkPoint = hit.point;
             }
@@ -490,7 +525,7 @@ public class EnemyAI : MonoBehaviour
         else if (rayIndex == 4)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, rayRight, maxRCLength, whatIsWall);
-            if (hit.point != null)
+            if (hit.collider != null)
             {
                 walkPoint = hit.point;
             }
@@ -504,7 +539,7 @@ public class EnemyAI : MonoBehaviour
         else if (rayIndex == 5)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, rayNW, maxRCLength, whatIsWall);
-            if (hit.point != null)
+            if (hit.collider != null)
             {
                 walkPoint = hit.point;
             }
@@ -518,7 +553,7 @@ public class EnemyAI : MonoBehaviour
         else if (rayIndex == 6)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, raySW, maxRCLength, whatIsWall);
-            if (hit.point != null)
+            if (hit.collider != null)
             {
                 walkPoint = hit.point;
             }
@@ -532,7 +567,7 @@ public class EnemyAI : MonoBehaviour
         else if (rayIndex == 7)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, raySE, maxRCLength, whatIsWall);
-            if (hit.point != null)
+            if (hit.collider != null)
             {
                 walkPoint = hit.point;
             }
@@ -546,7 +581,7 @@ public class EnemyAI : MonoBehaviour
         else if (rayIndex == 8)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, rayNE, maxRCLength, whatIsWall);
-            if (hit.point != null)
+            if (hit.collider != null)
             {
                 walkPoint = hit.point;
             }
@@ -570,6 +605,13 @@ public class EnemyAI : MonoBehaviour
 
     }
 
+    public void PlayerDetection()
+    {
+        playerInSightRange = Physics2D.OverlapCircle(transform.position, sightRange, whatIsPlayer);
+        //playerInSightRange = Physics2D.OverlapBox()
+
+        //Ray2D straightLine = new Ray2D(transform.position,)
+    }
 
 
 
@@ -594,22 +636,25 @@ public class EnemyAI : MonoBehaviour
         //FaceDirection();
 
         walkPointSet = false;
-        walkPoint = new Vector2(transform.position.x, transform.position.y);
+        walkPoint = new Vector2(transform.position.x,transform.position.y);
 
         processingDest = false;
 
-
+        // playerCharacter = GameObject.Find("Player");
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+
+        PlayerDetection();
+
+       /* if (Input.GetMouseButtonDown(0))
         {
             //Debug.Log("Some Input");
             InputInformation();
-        }
+        }*/
 
         if (!playerInSightRange && !inFieldOfView)
         {
@@ -638,5 +683,11 @@ public class EnemyAI : MonoBehaviour
         MoveToTarget();
 
 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(transform.position,sightRange);
     }
 }
