@@ -29,7 +29,7 @@ public class playerShoot : MonoBehaviour
         //distance
         // Vector2 playPosition = new Vector2(playerPos.position)
 
-        if (Input.GetButtonDown("Fire1") && picked.pickedUpGun == true) //picked up a gun
+        if (Input.GetMouseButtonDown(0) && picked.pickedUpGun == true) //picked up a gun
         {
             Shoot();
         }

@@ -9,6 +9,9 @@ public class pickUpGun : MonoBehaviour
     public Transform firePoint;
     public int ammoAvailable;
 
+    public float interactionPointRadius = 5.0f;
+ 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,27 +21,47 @@ public class pickUpGun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
+      
+        
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        //player must pick up gun when near it - by touching the collider and pressing right mouse button
-        if (collision.collider.CompareTag("GunPickUp") && Input.GetButtonDown("Fire1"))
+      
+         if (collision.collider.CompareTag("GunPickUp") )
         {
-            // Gizmos.color = Color.red;
-          //  Gizmos.DrawWireSphere(interactionPoint.position, interactionPointRadius);
+          
+            if (Input.GetMouseButtonDown(1))
+            { 
+                
+                Debug.Log("Picked up Gun!");
+                   Destroy(collision.gameObject);  
+                pickedUpGun = true;
 
-            // Debug.Log("Picked up Gun!");
+            }
 
-            //player equips gun
-            pickedUpGun = true;
+
+
+           
+          
 
             //gun sprite gets destroyed
-            Destroy(collision.gameObject);
+           
 
             // Instantiate() gun in player's hands
             //Instantiate(gunPrefab, firePoint.position, firePoint.rotation);
         }
+
+        
+        
+    }
+
+    
+
+    private void OnDrawGizmos()
+    {
+         Gizmos.color = Color.red;
+         Gizmos.DrawWireSphere(transform.position, interactionPointRadius);
     }
 }
+
