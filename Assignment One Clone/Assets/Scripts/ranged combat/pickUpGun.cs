@@ -40,14 +40,7 @@ public class pickUpGun : MonoBehaviour
 
             }
 
-
-
-           
           
-
-            //gun sprite gets destroyed
-           
-
             // Instantiate() gun in player's hands
             //Instantiate(gunPrefab, firePoint.position, firePoint.rotation);
         }
@@ -58,10 +51,6 @@ public class pickUpGun : MonoBehaviour
 
     
 
-    private void OnDrawGizmos()
-    {
-         Gizmos.color = Color.red;
-         Gizmos.DrawWireSphere(transform.position, interactionPointRadius);
-    }
+  
 }
 
