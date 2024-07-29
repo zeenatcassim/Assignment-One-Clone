@@ -9,40 +9,39 @@ public class WeaponController : MonoBehaviour
 
     [Header("Weapon Switching")]
     [SerializeField] bool canCollect = false;
-    [SerializeField] int weaponToggle = 0;
+    [SerializeField] int collected = 0;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        playerTransform = GameObject.FindWithTag("Player").transform;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
-        {
             canCollect = true;
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
-        {
             canCollect = false;
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && canCollect == true)
         {
-            Debug.Log("Collect");
+            if (collected == 1) collected = 0;
+            else collected = 1;
+
         }
 
-        this.transform.position = playerTransform.position;
+        if (collected == 1)
+            this.transform.position = playerTransform.position;
     }
 }
