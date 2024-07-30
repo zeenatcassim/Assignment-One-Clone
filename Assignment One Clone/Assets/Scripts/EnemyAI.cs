@@ -209,6 +209,8 @@ public class EnemyAI : MonoBehaviour
         //else enemyState = EnemyState.DEAD;
 
         //enemyState = EnemyState.HURT;
+        Debug.Log("Got Hit");
+
     }
 
     public void TakeFinisher()

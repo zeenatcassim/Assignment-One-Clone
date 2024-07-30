@@ -731,7 +731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4cdb4ef59128647b4f8d75f223a12e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyState: 1
+  enemyState: 0
   targetPosition: {fileID: 526243842}
   walkPoint: {x: 0, y: 0, z: 0}
   speeed: 350
@@ -766,7 +766,7 @@ MonoBehaviour:
   lastDirRay: 0
   nextDirRay: 0
   processingDest: 0
-  walkPattern: 1
+  walkPattern: 3
   enemyGFX: {fileID: 1683366205}
 --- !u!61 &898483940
 BoxCollider2D:
