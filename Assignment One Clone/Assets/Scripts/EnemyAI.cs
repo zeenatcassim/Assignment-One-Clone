@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public enum EnemyState { IDLE, PATROL, DOWNED, HURT, ALERT }
+public enum EnemyState { IDLE, PATROL, DOWNED, HURT, ALERT, ATTACK, DEAD }
 
 
 public class EnemyAI : MonoBehaviour
 {
+    public EnemyState enemyState;
+
     //Declarations
     public Transform targetPosition;
     Vector2 worldPos;
@@ -36,12 +38,14 @@ public class EnemyAI : MonoBehaviour
     public LayerMask whatIsPlayer, whatIsWall, whatIsComrade;
 
     //Reference To Player, and FOVpivot
-    GameObject playerCharacter, viewPoint;
+    public GameObject playerCharacter;
 
     //Distance Checks related to player detection
     public float sightRange, meleeRange;
     public bool inFieldOfView, playerInSightRange, targetSet;
     public bool weaponEquiped, rangedWeapon; // Will determine whether to shoot or move to meleeRange
+
+    public Transform referencePoint;
 
     //Distance Checks related to walkpoint algorithm
     public float turnRange;
@@ -199,8 +203,21 @@ public class EnemyAI : MonoBehaviour
     public void TakeAttack()
     {
         //Determine if this game object was killed or no
+        //if not killed
+        //enemyState = EnemyState.DOWNED;
+        //else enemyState = EnemyState.DEAD;
+
+        //enemyState = EnemyState.HURT;
+    }
+
+    public void TakeFinisher()
+    {
+        enemyState = EnemyState.DEAD;
+        
 
     }
+
+
 
     public void FaceDirection()
     {
@@ -223,45 +240,61 @@ public class EnemyAI : MonoBehaviour
 
     public void Patroling()
     {
+
         //Sensing if in sight range
 
-        //if we have nowhere to walk to, and have to walk, find walk point
-        if (!walkPointSet)
+        if (enemyState != EnemyState.PATROL)
         {
-            //Debug.Log("should be searching");
-            SearchWalkPoint();
-            //SearchWalkPoint();
+
         }
 
-        //with a walk point, walk towards that point
-        if (walkPointSet)
+        else if(enemyState == EnemyState.IDLE)
         {
-            if (processingDest)
+
+        }
+
+        else if (enemyState == EnemyState.PATROL)
+        { 
+
+            //if we have nowhere to walk to, and have to walk, find walk point
+            if (!walkPointSet)
             {
+                //Debug.Log("should be searching");
+                SearchWalkPoint();
+                //SearchWalkPoint();
+            }
+
+            //with a walk point, walk towards that point
+            if (walkPointSet)
+            {
+                if (processingDest)
+                {
+
+                }
+                else
+                {
+                    SetDestintion(walkPoint);
+                    //Debug.Log("Walk Point" + walkPoint);
+                }
 
             }
-            else
+
+            //checking how close we are to our walk point
+            Vector2 distanceToWalkPoint = walkPoint - transform.position;
+
+            if (distanceToWalkPoint.magnitude < turnRange)
             {
-                SetDestintion(walkPoint);
-                Debug.Log("Walk Point" + walkPoint);
+                //when close enough, find a new point to walk to
+                walkPointSet = false;
             }
 
+                //Combat a different error, it in the PATROL state and is stuck for some reason, find new walk point
+                /* if(rb.velocity == Vector2.zero)
+                 {
+                     walkPointSet = false;
+                 }*/
         }
 
-        //checking how close we are to our walk point
-        Vector2 distanceToWalkPoint = walkPoint - transform.position;
-
-        if (distanceToWalkPoint.magnitude < turnRange)
-        {
-            //when close enough, find a new point to walk to
-            walkPointSet = false;
-        }
-
-        //Combat a different error, it in the PATROL state and is stuck for some reason, find new walk point
-        /* if(rb.velocity == Vector2.zero)
-         {
-             walkPointSet = false;
-         }*/
     }
 
 
@@ -435,6 +468,11 @@ public class EnemyAI : MonoBehaviour
 
     }
 
+  /*  public void IdleLook()
+    {
+        transform.position = Vector3.zero;
+    }*/
+
     public void PatternSelect(int patternIndex)
     {
         if (patternIndex == 0)
@@ -456,7 +494,7 @@ public class EnemyAI : MonoBehaviour
         }
         else if (patternIndex == 4)
         {
-
+            
         }
         else if (patternIndex == 5)
         {
@@ -602,15 +640,48 @@ public class EnemyAI : MonoBehaviour
 
     public void Attacking()
     {
-
+        enemyState = EnemyState.ATTACK;
     }
 
     public void PlayerDetection()
     {
         playerInSightRange = Physics2D.OverlapCircle(transform.position, sightRange, whatIsPlayer);
+        // playerInSightRange = Physics2D.CircleCast(transform.position, sightRange, movementDirection, 0, whatIsPlayer);
+
+        if (playerInSightRange)
+        {
+            Vector2 Vect1 = referencePoint.position - transform.position;
+            Vector2 Vect2 = playerCharacter.transform.position - transform.position;
+
+            float fov_angle = Vector2.Angle(Vect1, Vect2); //unsigned check of angles using vector 1 as reference
+
+            if (fov_angle < 90)
+            {
+                Debug.Log("In field of view");
+                /*We are within the eyeline of our enemy, one last raycast to see if we have a direct line of fire
+                between us and them, and if we do, we have indeed seen them, and can indeed chase them down*/
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vect2);
+                if(hit.collider.CompareTag("Player"))
+                {
+                    //We actually managed to see our player in our peripheral
+                    //Become Hostile and attack or move towards player position
+                    inFieldOfView = true;
+                    
+
+                }
+
+            }
+
+           /* Gizmos.color = Color.magenta;
+            Gizmos.DrawRay(transform.position, Vect1);
+            Gizmos.DrawRay(transform.position, Vect2);*/
+        }
+       
+        
         //playerInSightRange = Physics2D.OverlapBox()
 
         //Ray2D straightLine = new Ray2D(transform.position,)
+        
     }
 
 
@@ -640,7 +711,9 @@ public class EnemyAI : MonoBehaviour
 
         processingDest = false;
 
-        // playerCharacter = GameObject.Find("Player");
+        //playerCharacter = GameObject.Find("Player");
+
+        //enemyState = EnemyState.PATROL;
 
     }
 
@@ -688,6 +761,11 @@ public class EnemyAI : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(transform.position,sightRange);
+        Gizmos.DrawWireSphere(transform.position,sightRange);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawRay(transform.position, referencePoint.position - transform.position);
+        Gizmos.DrawRay(transform.position, playerCharacter.transform.position - transform.position);
+
     }
 }
