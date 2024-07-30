@@ -19,4 +19,4 @@ MonoBehaviour:
   maxAmmo: 0
   rounds: 0
   roundDelay: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: -433540217, guid: 249b3499c4fec444985f2d32f16fe5b4, type: 3}
