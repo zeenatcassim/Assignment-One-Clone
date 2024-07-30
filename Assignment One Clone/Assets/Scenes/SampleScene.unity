@@ -1501,6 +1501,7 @@ GameObject:
   - component: {fileID: 1763380394}
   - component: {fileID: 1763380399}
   - component: {fileID: 1763380400}
+  - component: {fileID: 1763380401}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1568,6 +1569,7 @@ MonoBehaviour:
   moveSpeed: 10
   rb: {fileID: 1763380396}
   cam: {fileID: 519420031}
+  animator: {fileID: 1763380401}
 --- !u!50 &1763380396
 Rigidbody2D:
   serializedVersion: 4
@@ -1637,7 +1639,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0, g: 0.24255133, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.12644672, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1696,6 +1698,27 @@ MonoBehaviour:
   firePoint: {fileID: 1279278423}
   projectilePrefab: {fileID: 1257910826766359848, guid: 43e34f980061a234da4656bccdd03170, type: 3}
   firingSpeed: 5
+--- !u!95 &1763380401
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763380393}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 51f4321e523240340bfb37f5f2d61dfc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1793983238
 GameObject:
   m_ObjectHideFlags: 0

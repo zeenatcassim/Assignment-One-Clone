@@ -19,7 +19,10 @@ public class CursorObject : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse2))
         {
-            Debug.Log("Lock tf in");
+            Debug.Log("Locked");
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = true;
         }
     }
 
