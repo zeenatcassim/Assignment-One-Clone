@@ -12,6 +12,10 @@ public class WeaponController : MonoBehaviour
     [SerializeField] int collected = 0;
 
 
+    public int maxRounds;
+    public int ammo;
+    public int roundDelay;
+
 
     // Start is called before the first frame update
     void Start()

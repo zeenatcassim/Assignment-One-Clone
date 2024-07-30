@@ -17,7 +17,7 @@ public class WeaponData : ScriptableObject
     public int maxAmmo;
 
     [Header("Shooting")]
-    public float rounds;
+    public int rounds;
     public float roundDelay;
 
     [Header("UI")]
