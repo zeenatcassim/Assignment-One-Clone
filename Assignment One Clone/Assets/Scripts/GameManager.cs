@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<WeaponData> weaponData = new List<WeaponData>();
     [SerializeField] List<Transform> weaponSpawnPoints = new List<Transform>();
 
+    [Header("Audio")]
+    [SerializeField] AudioSource backgroundMusic;
+
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,8 @@ public class GameManager : MonoBehaviour
             newWeapon.GetComponent<WeaponController>().type = weaponData[i].type;
             newWeapon.GetComponent<SpriteRenderer>().sprite = weaponData[i].sprite;
         }
+
+        backgroundMusic.Play();
     }
 
     // Update is called once per frame

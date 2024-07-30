@@ -8,6 +8,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] Transform playerTransform;
 
     [Header("Weapon Switching")]
+    [SerializeField] GameObject indicator;
     [SerializeField] bool canCollect = false;
     [SerializeField] int collected = 0;
 
@@ -48,5 +49,16 @@ public class WeaponController : MonoBehaviour
 
         if (collected == 1)
             this.transform.position = playerTransform.position;
+
+        if (canCollect)
+        {
+            
+        }
+        else
+        {
+            
+        }
+
+        indicator.SetActive(canCollect);
     }
 }
