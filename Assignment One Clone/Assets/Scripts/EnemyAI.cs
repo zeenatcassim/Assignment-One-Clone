@@ -43,6 +43,7 @@ public class EnemyAI : MonoBehaviour
     public GameObject playerCharacter;
 
     //Distance Checks related to player detection
+    public Transform meleePoint;
     public float sightRange, meleeRange;
     public bool inFieldOfView, playerInSightRange, inMeleeRange, targetSet;
     public bool weaponEquiped, rangedWeapon; // Will determine whether to shoot or move to meleeRange
@@ -74,6 +75,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] int walkPattern;
 
     //Timers
+    float knockedDownTimer = 0.0f;
+    public float downedTime;
+    float seenPlayerTimer = 0.0f;
+    public float forgetPlayerTime;
+
+    public float reactionTime = 1f; // switch to attack mode/state
 
     //Attacking control for an enemy
     public float timeBetweenAttacks;
@@ -82,14 +89,20 @@ public class EnemyAI : MonoBehaviour
     public float startupRangedAttack;
     bool alreadyAttacked;
 
+    bool finishEngaged;
+
     Rigidbody2D rb;
 
     public GameObject enemyGFX;
     SpriteRenderer enemySprite;
 
-    Color enemyDefault;
-    Color enemyKnocked = Color.grey;
-    Color enemyDead = Color.red;
+    Color enemyDefaultColor;
+    Color enemyKnockedColor = Color.grey;
+    Color enemyDeadColor = Color.red;
+
+    //Finishers 
+    int bashCounter;
+    int bashesRequired; //Function that will set up how many bashes we require
 
 
     void UpdatePath()
@@ -217,6 +230,15 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+
+    public void TakeHurt()
+    {
+        enemyState = EnemyState.HURT;
+
+        enemySprite.color = enemyDeadColor;
+        Debug.Log("Player is hurt");
+    }
+
     public void TakeAttack()
     {
         //Determine if this game object was killed or no
@@ -225,17 +247,95 @@ public class EnemyAI : MonoBehaviour
         //else enemyState = EnemyState.DEAD;
 
         //enemyState = EnemyState.HURT;
+        
+        //int damage, if damage > etc.
+
         Debug.Log("Got Hit");
+        enemyState = EnemyState.DOWNED;
+
+        enemySprite.color = enemyKnockedColor;
+
+        //Start Timer for them to get back up
+
 
     }
 
-    public void TakeFinisher()
+
+
+    public void PlayerSideEngageFinisher()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Space)) // lock out the function entry or something
+        {
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, 3f,Vector2.zero,0,whatIsComrade);
+            {
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    GameObject enemyObj = hit.collider.gameObject;
+
+                    bool finisherEngaged = enemyObj.GetComponent<EnemyAI>().TakeFinisher();
+                    if(finisherEngaged)
+                    {
+                        //Call our function that will lock other controls until our enemy is dead.
+                        
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            //enemy
+        }
+
+        /*if(bashCounter < bashesRequired)
+          {
+          some things are true
+
+
+          }
+          else if (bashCounter > basehesRequired)
+          {
+           things be false, call the TakeFinisher Function, avoid null reference error
+            
+
+          }
+
+           call a fucntion to reset counter and a nullify a game Object target. 
+         */
+    }
+
+
+    public bool TakeFinisher()
+    {
+        if(!inFieldOfView && enemyState != EnemyState.ATTACK)
+        {
+            finishEngaged = true;
+            return finishEngaged;
+        }
+        
+        else if(enemyState == EnemyState.DOWNED)
+        {
+            finishEngaged = true;
+            return finishEngaged;
+        }
+        else
+        {
+            Debug.Log("Enemy Downed");
+            finishEngaged=false;
+            return finishEngaged;
+        }
+
+    }
+
+    public void EnemyDeath()
     {
         enemyState = EnemyState.DEAD;
-        
+        BoxCollider2D enemyCollider = this.gameObject.GetComponent<BoxCollider2D>();
 
+        enemyCollider.enabled = false;
+        enemySprite.color = enemyDeadColor;
     }
-
 
 
     public void FaceDirection()
@@ -255,6 +355,11 @@ public class EnemyAI : MonoBehaviour
     public void Sensing()
     {
 
+    }
+
+    public void OnYourFeet()
+    {
+        enemyState = EnemyState.PATROL;
     }
 
     public void Patroling()
@@ -699,7 +804,7 @@ public class EnemyAI : MonoBehaviour
         
         targetPosition.position = playerCharacter.transform.position;
 
-        inMeleeRange = Physics2D.OverlapCircle(transform.position, meleeRange, whatIsPlayer);
+        inMeleeRange = Physics2D.OverlapCircle(meleePoint.position, meleeRange, whatIsPlayer);
 
         if(inMeleeRange && !rangedWeapon) //in melee range with a melee weapon
         {
@@ -714,6 +819,7 @@ public class EnemyAI : MonoBehaviour
         }
 
     }
+
 
     public void PlayerDetection()
     {
@@ -743,7 +849,13 @@ public class EnemyAI : MonoBehaviour
                         inFieldOfView = true;
                         seenPlayerOnce = true;
                         //We'll check if we have a weapon
-                        enemyState = EnemyState.ATTACK;
+                        if (weaponEquiped)
+                        {
+                            //enemyState = EnemyState.ATTACK;
+                            SetAttackState();
+                        }
+
+                        seenPlayerTimer = 0;
 
                     
                     }
@@ -754,8 +866,6 @@ public class EnemyAI : MonoBehaviour
                     }
                 }
                
-
-          
             }
 
             else
@@ -766,12 +876,26 @@ public class EnemyAI : MonoBehaviour
          
         }
        
-        
-        //playerInSightRange = Physics2D.OverlapBox()
-
-        //Ray2D straightLine = new Ray2D(transform.position,)
-        
     }
+
+    private void SetAttackState()
+    {
+        if(enemyState != EnemyState.ATTACK)
+        {
+            enemyState = EnemyState.ATTACK;
+        }
+      
+    }
+
+    private void SetUnarmedState()
+    {
+        if (enemyState != EnemyState.UNARMED)
+        {
+            enemyState = EnemyState.UNARMED;
+        }
+
+    }
+
 
     private void FindWeapon() // Mix of Patrol && Others
     {
@@ -808,7 +932,7 @@ public class EnemyAI : MonoBehaviour
 
         enemySprite = GetComponentInChildren<SpriteRenderer>();
 
-        enemyDefault = enemySprite.color;
+        enemyDefaultColor = enemySprite.color;
         //enemySprite.color = Color.white;
 
         //FaceDirection();
@@ -834,6 +958,19 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
 
+        knockedDownTimer += Time.deltaTime;
+        seenPlayerTimer += Time.deltaTime;
+
+
+        if(enemyState == EnemyState.DOWNED && !finishEngaged)
+        {
+            if(knockedDownTimer > downedTime)
+            {
+                OnYourFeet();
+
+            }
+        }
+
         PlayerDetection();
 
        /* if (Input.GetMouseButtonDown(0))
@@ -848,21 +985,28 @@ public class EnemyAI : MonoBehaviour
             Patroling();
         }*/
 
-        if ((!playerInSightRange || !inFieldOfView) && seenPlayerOnce)
+        if ((!playerInSightRange || !inFieldOfView) && weaponEquiped)
         {
-            enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once
-            Patroling();
-            
-            //sensing will control FieldOfView
+           
+            if (seenPlayerOnce)
+            {
+                if (seenPlayerTimer > forgetPlayerTime)
+                {
+                    enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once
+                    Patroling();
+                }
+
+            }
+            else
+            {
+               
+                /* if (playerInSightRange || !inFieldOfView)*/
+                enemyState = startupState;
+                Patroling();
+            }
+
+           
         }
-
-        if((!playerInSightRange || !inFieldOfView) && !seenPlayerOnce)
-        {
-            enemyState = startupState;
-            Patroling();
-        }
-
-
 
         /*   if (playerInSightRange && inFieldOfView)
            {
@@ -874,9 +1018,10 @@ public class EnemyAI : MonoBehaviour
             Attacking();
         }
 
+
         if (!weaponEquiped) 
         {
-            enemyState = EnemyState.UNARMED;
+            SetUnarmedState();
             FindWeapon();
         }
 
@@ -906,11 +1051,14 @@ public class EnemyAI : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.yellow; //Sight Range
         Gizmos.DrawWireSphere(transform.position, sightRange);
 
-        Gizmos.color = Color.magenta;
+        Gizmos.color = Color.magenta; //Field Of View Angles
         Gizmos.DrawRay(transform.position, referencePoint.position - transform.position);
         Gizmos.DrawRay(transform.position, playerCharacter.transform.position - transform.position);
+
+        Gizmos.color = Color.cyan; // Enemy Melee Range
+        Gizmos.DrawWireSphere(meleePoint.position, meleeRange);
     }
 }
