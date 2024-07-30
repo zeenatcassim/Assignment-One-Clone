@@ -6,9 +6,10 @@ public class GameManager : MonoBehaviour
 {
 
     [Header("Weapon Spawning")]
-    [SerializeField] GameObject weaponPrefab;
+    [SerializeField] GameObject[] weaponPrefab;
     [SerializeField] List<WeaponData> weaponData = new List<WeaponData>();
     [SerializeField] List<Transform> weaponSpawnPoints = new List<Transform>();
+    GameObject prefabAssign;
 
     [Header("Audio")]
     [SerializeField] AudioSource backgroundMusic;
@@ -19,7 +20,14 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < weaponData.Count; i++)
         {
-            GameObject newWeapon = Instantiate(weaponPrefab, weaponSpawnPoints[i]);
+            if (weaponData[i].type == "Gun")
+                prefabAssign = weaponPrefab[0];
+            else if (weaponData[i].type == "HandHeld")
+                prefabAssign = weaponPrefab[1];
+            else
+                prefabAssign = weaponPrefab[2];
+
+            GameObject newWeapon = Instantiate(prefabAssign, weaponSpawnPoints[i]);
             newWeapon.GetComponent<WeaponController>().ammo = weaponData[i].maxAmmo;
             newWeapon.GetComponent<WeaponController>().maxRounds = weaponData[i].rounds;
             newWeapon.GetComponent<WeaponController>().roundDelay = weaponData[i].rounds;

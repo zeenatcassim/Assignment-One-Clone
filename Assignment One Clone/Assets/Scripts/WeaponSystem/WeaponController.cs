@@ -59,6 +59,6 @@ public class WeaponController : MonoBehaviour
             
         }
 
-        indicator.SetActive(canCollect);
+        indicator.SetActive(collected == 0);
     }
 }
