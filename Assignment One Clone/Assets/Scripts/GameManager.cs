@@ -5,6 +5,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    [TextArea]
+    [Tooltip("Doesn't do anything. Just comments shown in inspector")]
+    public string Notes = "Press the Right Mouse Button to switch Weapons.";
+
     [Header("Weapon Spawning")]
     [SerializeField] GameObject[] weaponPrefab;
     [SerializeField] List<WeaponData> weaponData = new List<WeaponData>();
