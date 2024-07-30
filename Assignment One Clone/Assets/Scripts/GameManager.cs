@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
             newWeapon.GetComponent<WeaponController>().ammo = weaponData[i].maxAmmo;
             newWeapon.GetComponent<WeaponController>().maxRounds = weaponData[i].rounds;
             newWeapon.GetComponent<WeaponController>().roundDelay = weaponData[i].rounds;
+            newWeapon.GetComponent<WeaponController>().type = weaponData[i].type;
+            newWeapon.GetComponent<SpriteRenderer>().sprite = weaponData[i].sprite;
         }
     }
 

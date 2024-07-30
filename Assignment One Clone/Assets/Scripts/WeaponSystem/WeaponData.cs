@@ -21,5 +21,5 @@ public class WeaponData : ScriptableObject
     public float roundDelay;
 
     [Header("UI")]
-    public Image sprite;
+    public Sprite sprite;
 }

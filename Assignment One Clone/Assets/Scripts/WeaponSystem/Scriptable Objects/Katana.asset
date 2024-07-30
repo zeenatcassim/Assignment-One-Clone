@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Katana
   m_EditorClassIdentifier: 
   weaponName: Katana
-  type: 
+  type: Throw
   damage: 10
-  loadTime: 0
-  rounds: 0
-  roundDelay: 0
+  reloadTime: 3
+  maxAmmo: 5
+  rounds: 2
+  roundDelay: 4
+  sprite: {fileID: 21300000, guid: 63289a10edac3e34099100d76555a1cd, type: 3}

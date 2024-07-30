@@ -15,6 +15,7 @@ public class WeaponController : MonoBehaviour
     public int maxRounds;
     public int ammo;
     public int roundDelay;
+    public string type;
 
 
     // Start is called before the first frame update
