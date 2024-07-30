@@ -46,6 +46,7 @@ public class EnemyAI : MonoBehaviour
     public bool weaponEquiped, rangedWeapon; // Will determine whether to shoot or move to meleeRange
 
     public Transform referencePoint;
+    public float fov_Range;
 
     //Distance Checks related to walkpoint algorithm
     public float turnRange;
@@ -655,7 +656,7 @@ public class EnemyAI : MonoBehaviour
 
             float fov_angle = Vector2.Angle(Vect1, Vect2); //unsigned check of angles using vector 1 as reference
 
-            if (fov_angle < 90)
+            if (fov_angle < fov_Range)
             {
                 Debug.Log("In field of view");
                 /*We are within the eyeline of our enemy, one last raycast to see if we have a direct line of fire
@@ -672,9 +673,7 @@ public class EnemyAI : MonoBehaviour
 
             }
 
-           /* Gizmos.color = Color.magenta;
-            Gizmos.DrawRay(transform.position, Vect1);
-            Gizmos.DrawRay(transform.position, Vect2);*/
+         
         }
        
         
@@ -758,7 +757,7 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-    private void OnDrawGizmos()
+   /* private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position,sightRange);
@@ -767,5 +766,15 @@ public class EnemyAI : MonoBehaviour
         Gizmos.DrawRay(transform.position, referencePoint.position - transform.position);
         Gizmos.DrawRay(transform.position, playerCharacter.transform.position - transform.position);
 
+    }*/
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawRay(transform.position, referencePoint.position - transform.position);
+        Gizmos.DrawRay(transform.position, playerCharacter.transform.position - transform.position);
     }
 }
