@@ -37,7 +37,7 @@ public class pickUpGun : MonoBehaviour
                 Debug.Log("Picked up Gun!");
                    Destroy(collision.gameObject);  
                 pickedUpGun = true;
-
+                //ammoAvailable = 28;
             }
 
           
