@@ -316,7 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAQIeymYBOyXAIAABUFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VMuS2jAQ/BVK57DFa4HNLTEsmwMLtWxqL74Ia4xVyJJLD57Fv2ck29ghlROiu2emZzTylXBpCkis0gvN2VIxIN87xJ/Jt05DvsGJ7pTc8AvUmi/ObOZFNGg+qOUK8b4PMyoHq3nyQ+6EF/cQdJKnSudztoNIGWsQTqkwgJRW1kdLhK4dcsKf7osPOeNpMPGnC55eep0bHhOQFnQjrYW1rFQ5mQiaF8C85UY8rtWjUiaxmUrhjSdKCG4qJ8Sei9BpRAvjsA8UME6xs1C+/zRAIAO+y6z32Q5fpakBW5nS9DzjGkdU5iU/VTm3nJp96exAhfOVBs/j4KpMuvyH7/YDnWqVv9V1+z1fw2Y82X/Qc0KNbQ22Dc9a1sOAjlTs6VbAVwbyXS20cpIhabXzoc7AYNb8vbcWZZDsG7y0+gC64v/X43u4he5PkeD51lNPoxLYCBUmHi4fNN7NLzQcVsNUKRD1Ln4b+KS79g5VxCvXxiJVdSm9va1y2kvJPMzMd+NspLSEAFemC5BU2PMa09jHK3zgWmUfmFfqX0tVvOLqR/AQEuBG3+s9UGt1vF+WydRxCSZbOSu4hMa0J95xTpGSstyw9kzqsI3TKU1aYTvH2d+rRQaTKduOKBtP+73t6HncHabD4YQNJ1s2SWE6TUnYPS6xTyrWpdFqPHhrskkucc/qj0hnoWkRtp1pelzwS67aBrlM1SbRAHJVprg7B41V8GGyOeM4oQ1Yy2W4cHKNiVDJHlh8rxmHVucnq2ncZIlJwQ/KeiQmUfhsxMTD92VeazhwOPridbIbuf0BUEsDBBQAAAgIAAAQIexdAm4mbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrSSkblFSpJJYoqZhaFBkompma5xmrGxeYqxeVKKeVqqhUWaUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAAAQIeymYBOyXAIAABUFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAQIexdAm4mbQAAAHgAAAAJACQAAAAAAAAAAAAAAKkCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAYQMAAAAA
+    dataString: UEsDBBQAAAgIAAAQIexCskYaXQIAABUFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VMuS2jAQ/BVK57DFa4HNLTEsmwMLtWxqL74Ia4xVyJJLD57Fv2ck29ghlROiu2emZzTylXBpCkis0gvN2VIxIN87xJ/Jt05DvsGJ7pTc8AvUmi/ObOZFNGg+qOUK8b4PMyoHq3nyQ+6EF/cQdJKnSudztoNIGWsQTqkwgJRW1kdLhK4dcsKf7osPOeNpMPGnC55eep0bHhOQFnQjrYW1rFQ5mQiaF8C85UbcH9TyUamT2E0l8c4TJQQ3lRViz0VoNaKFcdgIChin2Fqo338aIJAB32XWG22Hr9LUgK1caXqecY0zKvOSn6ocXE7NvrR2oML5SoPncXBVJl3+w3f7gU61yt/quv2er2Eznuw/6DmhxrYm24ZnLethQkcq9nQr4CsD+a4WWjnJkLTa+VBnYDBr/t5bizJI9g1eWn0AXfH/+/E93EL3p0jwfOupp1EJbIQKEw+3Dxrv5hcaDrthqhSIehe/DXzSXXuJKuKVa2ORqrqU3t5WOe2lZB5m5rtxNlJaQoAr0wVIKux5jWns4xU+cK2yD8wr9c+lKl5x9St4CAlwo+/1Hqi1Ot4vy2TquASTrZwVXEJj2hPvOKdISVluWHsmddjG6ZQmrbCd4+zv1SKDyZRtR5SNp/3edvQ87g7T4XDChpMtm6QwnaYk7B6X2CcV69JoNR68Ndkkl7hn9Veks9C0CNvOND0u+CVXrZFzmapNogHkqsxwNw4ai+C7ZHPGcUAbsJbLcN/kGhOhkj2w+J4oDp3OT1bTuMkSk4IflPVITKLw2YiJh++7vNZw4HD0xetkN3L7A1BLAwQUAAAICAAAECHsXQJuJm0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0kpG5RUqSSWKKmYWhQZKJqZmucZqxsXmKsXlSinlaqoVFmlIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAECHsQrJGGl0CAAAVBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAECHsXQJuJm0AAAB4AAAACQAkAAAAAAAAAAAAAACqAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAGIDAAAAAA==
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -896,12 +896,13 @@ Transform:
   m_GameObject: {fileID: 898483934}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.71, y: -0.24, z: 0}
+  m_LocalPosition: {x: -18.14, y: -0.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1683366206}
   - {fileID: 509476434}
+  - {fileID: 1282258113}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &898483937
@@ -916,7 +917,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 6
   m_LinearDrag: 1
   m_AngularDrag: 1
   m_GravityScale: 0
@@ -987,16 +988,24 @@ MonoBehaviour:
   whatIsComrade:
     serializedVersion: 2
     m_Bits: 128
+  whatIsNear:
+    serializedVersion: 2
+    m_Bits: 320
+  whatIsWeapon:
+    serializedVersion: 2
+    m_Bits: 1024
   playerCharacter: {fileID: 1763380393}
   sightRange: 15
   meleeRange: 3
   inFieldOfView: 0
   playerInSightRange: 0
+  inMeleeRange: 0
   targetSet: 0
-  weaponEquiped: 0
+  weaponEquiped: 1
   rangedWeapon: 0
+  isWeaponAround: 0
   referencePoint: {fileID: 509476434}
-  fov_Range: 90
+  fov_Range: 135
   turnRange: 2
   inTurnRange: 0
   walkPointSet: 0
@@ -1006,7 +1015,11 @@ MonoBehaviour:
   lastDirRay: 0
   nextDirRay: 0
   processingDest: 0
-  walkPattern: 3
+  walkPattern: 1
+  timeBetweenAttacks: 2
+  startupMeleeAttack: 1
+  timeBetweenRangedAttack: 2
+  startupRangedAttack: 1
   enemyGFX: {fileID: 1683366205}
 --- !u!61 &898483940
 BoxCollider2D:
@@ -1247,6 +1260,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1763380398}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1282258112
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1282258113}
+  m_Layer: 7
+  m_Name: MeleeAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1282258113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282258112}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 898483935}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1295056106
 GameObject:

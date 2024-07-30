@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public enum EnemyState { IDLE, PATROL, DOWNED, HURT, ALERT, ATTACK, DEAD }
+public enum EnemyState { IDLE, PATROL, DOWNED, HURT, ALERT, ATTACK, DEAD, UNARMED }
 
 
 public class EnemyAI : MonoBehaviour
 {
     public EnemyState enemyState;
+    EnemyState startupState;
+    bool seenPlayerOnce;
 
     //Declarations
     public Transform targetPosition;
@@ -35,15 +37,17 @@ public class EnemyAI : MonoBehaviour
     float distanceToWaypoint;
 
     //Layers
-    public LayerMask whatIsPlayer, whatIsWall, whatIsComrade;
+    public LayerMask whatIsPlayer, whatIsWall, whatIsComrade, whatIsNear, whatIsWeapon;
 
     //Reference To Player, and FOVpivot
     public GameObject playerCharacter;
 
     //Distance Checks related to player detection
     public float sightRange, meleeRange;
-    public bool inFieldOfView, playerInSightRange, targetSet;
+    public bool inFieldOfView, playerInSightRange, inMeleeRange, targetSet;
     public bool weaponEquiped, rangedWeapon; // Will determine whether to shoot or move to meleeRange
+    
+    public bool isWeaponAround;
 
     public Transform referencePoint;
     public float fov_Range;
@@ -71,6 +75,13 @@ public class EnemyAI : MonoBehaviour
 
     //Timers
 
+    //Attacking control for an enemy
+    public float timeBetweenAttacks;
+    public float startupMeleeAttack;
+    public float timeBetweenRangedAttack;
+    public float startupRangedAttack;
+    bool alreadyAttacked;
+
     Rigidbody2D rb;
 
     public GameObject enemyGFX;
@@ -81,6 +92,11 @@ public class EnemyAI : MonoBehaviour
     Color enemyDead = Color.red;
 
 
+    void UpdatePath()
+    {
+        if (seeker.IsDone())
+            seeker.StartPath(transform.position, targetPosition.position, OnPathComplete);
+    }
 
     void GetPath()
     {
@@ -246,12 +262,7 @@ public class EnemyAI : MonoBehaviour
 
         //Sensing if in sight range
 
-        if (enemyState != EnemyState.PATROL)
-        {
-
-        }
-
-        else if(enemyState == EnemyState.IDLE)
+       if(enemyState == EnemyState.IDLE)
         {
 
         }
@@ -296,6 +307,11 @@ public class EnemyAI : MonoBehaviour
                  {
                      walkPointSet = false;
                  }*/
+        }
+
+        else
+        {
+            Debug.Log("We seem to not be patrolling");
         }
 
     }
@@ -641,9 +657,62 @@ public class EnemyAI : MonoBehaviour
 
     }
 
+    private void MeleeAttackPlayer()
+    {
+        if (!alreadyAttacked)
+        {
+
+           
+            //Deal Damage to cause the player to have to reset the game
+            //Game Over for player
+
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }
+
+
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
+    }
+
+
+    private void RangedAttackPlayer()
+    {
+        if (!alreadyAttacked)
+        {
+
+            //Fire a projectile at the player, projectile will handle player death
+
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenRangedAttack);
+        }
+    }
+
+
     public void Attacking()
     {
-        enemyState = EnemyState.ATTACK;
+        //enemyState = EnemyState.ATTACK;
+      
+            //SetDestintion(playerCharacter.transform.position);
+        
+        targetPosition.position = playerCharacter.transform.position;
+
+        inMeleeRange = Physics2D.OverlapCircle(transform.position, meleeRange, whatIsPlayer);
+
+        if(inMeleeRange && !rangedWeapon) //in melee range with a melee weapon
+        {
+            //Perform Melee attacks
+            Invoke(nameof(MeleeAttackPlayer), startupMeleeAttack);
+           
+        }
+
+        if (rangedWeapon && playerInSightRange)
+        {
+            Invoke(nameof(RangedAttackPlayer), startupRangedAttack);
+        }
+
     }
 
     public void PlayerDetection()
@@ -660,19 +729,38 @@ public class EnemyAI : MonoBehaviour
 
             if (fov_angle < fov_Range)
             {
-                Debug.Log("In field of view");
+                //Debug.Log("In field of view");
                 /*We are within the eyeline of our enemy, one last raycast to see if we have a direct line of fire
                 between us and them, and if we do, we have indeed seen them, and can indeed chase them down*/
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vect2);
-                if(hit.collider.CompareTag("Player"))
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vect2,sightRange,whatIsNear);
+                if(hit.collider != null)
                 {
-                    //We actually managed to see our player in our peripheral
-                    //Become Hostile and attack or move towards player position
-                    inFieldOfView = true;
+                    if (hit.collider.CompareTag("Player"))
+                    {
+                        //We actually managed to see our player in our peripheral
+                        //Become Hostile and attack or move towards player position
+
+                        inFieldOfView = true;
+                        seenPlayerOnce = true;
+                        //We'll check if we have a weapon
+                        enemyState = EnemyState.ATTACK;
+
                     
-
+                    }
+                    else
+                    {
+                        //Player is not within their field of view
+                        inFieldOfView = false;
+                    }
                 }
+               
 
+          
+            }
+
+            else
+            {
+                inFieldOfView=false;
             }
 
          
@@ -685,7 +773,25 @@ public class EnemyAI : MonoBehaviour
         
     }
 
+    private void FindWeapon() // Mix of Patrol && Others
+    {
+        isWeaponAround = Physics2D.OverlapCircle(transform.position, sightRange / 2, whatIsWeapon);
 
+        if (isWeaponAround)
+        {
+            //Find out if its in an equipable state. Walk towards it and pick it up
+        }
+       /* else if()            
+        {
+            //Check if the player has a weapon equiped and is within our weapon range
+            //in such a case, //make cautious walk pattern
+
+        }*/
+        else
+        {
+            //Do some basic patrolling
+        }
+    }
 
 
     // Start is called before the first frame update
@@ -712,9 +818,15 @@ public class EnemyAI : MonoBehaviour
 
         processingDest = false;
 
+        seenPlayerOnce=false;
+
+        alreadyAttacked = false;
+
         //playerCharacter = GameObject.Find("Player");
 
-        //enemyState = EnemyState.PATROL;
+        
+        InvokeRepeating("GetPath", 0f, 0.5f);
+        startupState = this.enemyState;
 
     }
 
@@ -730,21 +842,42 @@ public class EnemyAI : MonoBehaviour
             InputInformation();
         }*/
 
-        if (!playerInSightRange && !inFieldOfView)
+      /*  if (!playerInSightRange && !inFieldOfView)
         {
 
             Patroling();
-        }
+        }*/
 
-        if (playerInSightRange && !inFieldOfView)
+        if ((!playerInSightRange || !inFieldOfView) && seenPlayerOnce)
         {
+            enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once
             Patroling();
+            
             //sensing will control FieldOfView
         }
 
-        if (playerInSightRange && inFieldOfView)
+        if((!playerInSightRange || !inFieldOfView) && !seenPlayerOnce)
+        {
+            enemyState = startupState;
+            Patroling();
+        }
+
+
+
+        /*   if (playerInSightRange && inFieldOfView)
+           {
+               Attacking();
+           }*/
+
+        if (enemyState == EnemyState.ATTACK)
         {
             Attacking();
+        }
+
+        if (!weaponEquiped) 
+        {
+            enemyState = EnemyState.UNARMED;
+            FindWeapon();
         }
 
     }
@@ -753,6 +886,7 @@ public class EnemyAI : MonoBehaviour
     private void FixedUpdate()
     {
         //
+       
 
         MoveToTarget();
 
