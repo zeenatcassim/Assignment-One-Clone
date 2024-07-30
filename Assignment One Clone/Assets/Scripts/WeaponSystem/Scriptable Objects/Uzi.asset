@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Uzi
   m_EditorClassIdentifier: 
   weaponName: Uzi
-  type: 
+  type: Gun
   damage: 10
-  loadTime: 0
+  reloadTime: 0
+  maxAmmo: 0
   rounds: 0
   roundDelay: 0
+  sprite: {fileID: 0}

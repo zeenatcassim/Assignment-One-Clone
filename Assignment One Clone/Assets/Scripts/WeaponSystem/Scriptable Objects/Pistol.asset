@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   weaponName: Pistol
-  type: Shoot
+  type: Gun
   damage: 10
   reloadTime: 2
   maxAmmo: 5
