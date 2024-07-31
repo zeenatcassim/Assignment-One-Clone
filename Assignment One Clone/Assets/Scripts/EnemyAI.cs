@@ -392,7 +392,7 @@ public class EnemyAI : MonoBehaviour
 
        if(enemyState == EnemyState.IDLE)
         {
-
+            targetPosition.position = transform.position;
         }
 
         else if (enemyState == EnemyState.PATROL)
