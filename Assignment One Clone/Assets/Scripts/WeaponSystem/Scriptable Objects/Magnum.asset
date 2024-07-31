@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Magnum
   m_EditorClassIdentifier: 
   weaponName: Magnum
-  type: Gun
+  type: 
   damage: 10
-  reloadTime: 0
-  maxAmmo: 0
+  loadTime: 0
   rounds: 0
   roundDelay: 0
-  sprite: {fileID: 0}
