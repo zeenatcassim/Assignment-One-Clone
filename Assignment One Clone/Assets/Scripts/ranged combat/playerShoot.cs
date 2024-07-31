@@ -16,10 +16,7 @@ public class playerShoot : MonoBehaviour
     //Firing speed - float
     public float firingSpeed;
 
-    //nrOfRounds- int?
-
-  //  public GameObject playerPos;
-    //public GameObject enemyPos;
+ 
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +29,7 @@ public class playerShoot : MonoBehaviour
     {
        
 
-        if (Input.GetMouseButtonDown(0) && picked.pickedUpGun == true) //picked up a gun
+        if (Input.GetMouseButtonDown(0) && picked.pickedUpGun == true) //picked up a gun && left mouse button
         {
             Shoot();
         }

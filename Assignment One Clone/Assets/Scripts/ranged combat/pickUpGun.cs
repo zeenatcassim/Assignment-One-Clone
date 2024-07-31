@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class pickUpGun : MonoBehaviour
 {
-    public bool pickedUpGun = false;
+    private bool canPickUpGun = false;
    public GameObject gunPrefab;
     private Collider2D currentPickUpCollider;
     private GameObject gunInstance;
 
-    public Transform firePoint;
+    public bool pickedUpGun;
+   // public Transform firePoint;
     public int ammoAvailable;
 
   
@@ -25,7 +26,7 @@ public class pickUpGun : MonoBehaviour
     void Update()
     {
 
-        if (pickedUpGun && Input.GetMouseButtonDown(1))
+        if (canPickUpGun && Input.GetMouseButtonDown(1)) //right mouse button
         {
             PickUpGun();
         }
@@ -36,8 +37,9 @@ public class pickUpGun : MonoBehaviour
     {
         if (collision.CompareTag("GunPickUp"))
         {
-            pickedUpGun = true;
+            canPickUpGun = true;
             currentPickUpCollider = collision;
+            ammoAvailable = 17;
         }
     }
 
@@ -45,7 +47,7 @@ public class pickUpGun : MonoBehaviour
     {
         if (collision.CompareTag("GunPickUp"))
         {
-            pickedUpGun = false;
+            canPickUpGun = false;
             currentPickUpCollider = null;
         }
     }
@@ -60,7 +62,8 @@ public class pickUpGun : MonoBehaviour
         gunInstance.transform.localRotation = Quaternion.identity;
 
         Destroy(currentPickUpCollider.gameObject);
-        pickedUpGun = false;
+        canPickUpGun = false;
+        pickedUpGun = true;
     }
 
 }
