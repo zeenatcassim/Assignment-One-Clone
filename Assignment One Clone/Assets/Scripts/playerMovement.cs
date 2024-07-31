@@ -14,6 +14,53 @@ public class playerMovement : MonoBehaviour
 
     public Animator animator;
 
+    public LayerMask whatIsComrade;
+
+    public void PlayerSideEngageFinisher()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Space)) // lock out the function entry or something
+        {
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, 3f, Vector2.zero, 0, whatIsComrade);
+            {
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    GameObject enemyObj = hit.collider.gameObject;
+
+                    bool finisherEngaged = enemyObj.GetComponent<EnemyAI>().TakeFinisher();
+                    if (finisherEngaged)
+                    {
+                        //Call our function that will lock other controls until our enemy is dead.
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            //enemy
+        }
+
+        /*if(bashCounter < bashesRequired)
+          {
+          some things are true
+
+
+          }
+          else if (bashCounter > basehesRequired)
+          {
+           things be false, call the TakeFinisher Function, avoid null reference error
+            
+
+          }
+
+           call a fucntion to reset counter and a nullify a game Object target. 
+         */
+    }
+
+
+
     // Update is called once per frame
     void Update()
     {

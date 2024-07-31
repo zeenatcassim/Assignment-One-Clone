@@ -261,9 +261,9 @@ public class EnemyAI : MonoBehaviour
     }
 
 
-    public void PlayerSideNoiseMade()
+  /*  public void PlayerSideNoiseMade()
     {
-        RaycastHit2D[] hit = Physics2D.CircleCastAll(this.transform.position,7f,Vector2.zero,0,whatIsComrade);
+        RaycastHit2D[] hit = Physics2D.CircleCastAll(this.transform.position, 7f, Vector2.zero, 0, whatIsComrade);
         for (int i = 0; i < hit.Length; i++)
         {
             if (hit[i].collider.CompareTag("Enemy"))
@@ -273,7 +273,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
     }
-
+*/
 
     public void GoToNoiseLocation(Vector2 noiseLocation)
     {
