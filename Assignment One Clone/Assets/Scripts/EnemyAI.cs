@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public enum EnemyState { IDLE, PATROL, DOWNED, HURT, ALERT, ATTACK, DEAD }
+public enum EnemyState { IDLE, PATROL, DOWNED, HURT, ALERT, ATTACK, DEAD, UNARMED }
 
 
 public class EnemyAI : MonoBehaviour
 {
     public EnemyState enemyState;
+    EnemyState startupState;
+    bool seenPlayerOnce;
 
     //Declarations
     public Transform targetPosition;
@@ -35,15 +37,18 @@ public class EnemyAI : MonoBehaviour
     float distanceToWaypoint;
 
     //Layers
-    public LayerMask whatIsPlayer, whatIsWall, whatIsComrade;
+    public LayerMask whatIsPlayer, whatIsWall, whatIsComrade, whatIsNear, whatIsWeapon;
 
     //Reference To Player, and FOVpivot
     public GameObject playerCharacter;
 
     //Distance Checks related to player detection
+    public Transform meleePoint;
     public float sightRange, meleeRange;
-    public bool inFieldOfView, playerInSightRange, targetSet;
+    public bool inFieldOfView, playerInSightRange, inMeleeRange, targetSet;
     public bool weaponEquiped, rangedWeapon; // Will determine whether to shoot or move to meleeRange
+
+    public bool isWeaponAround;
 
     public Transform referencePoint;
     public float fov_Range;
@@ -70,17 +75,41 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] int walkPattern;
 
     //Timers
+    float knockedDownTimer = 0.0f;
+    public float downedTime;
+    float seenPlayerTimer = 0.0f;
+    public float forgetPlayerTime;
+
+    public float reactionTime = 1f; // switch to attack mode/state
+
+    //Attacking control for an enemy
+    public float timeBetweenAttacks;
+    public float startupMeleeAttack;
+    public float timeBetweenRangedAttack;
+    public float startupRangedAttack;
+    bool alreadyAttacked;
+
+    bool finishEngaged;
 
     Rigidbody2D rb;
 
     public GameObject enemyGFX;
     SpriteRenderer enemySprite;
 
-    Color enemyDefault;
-    Color enemyKnocked = Color.grey;
-    Color enemyDead = Color.red;
+    Color enemyDefaultColor;
+    Color enemyKnockedColor = Color.grey;
+    Color enemyDeadColor = Color.red;
+
+    //Finishers 
+    int bashCounter;
+    int bashesRequired; //Function that will set up how many bashes we require
 
 
+    void UpdatePath()
+    {
+        if (seeker.IsDone())
+            seeker.StartPath(transform.position, targetPosition.position, OnPathComplete);
+    }
 
     void GetPath()
     {
@@ -124,22 +153,22 @@ public class EnemyAI : MonoBehaviour
     }
 
 
-/*    public void InputInformation()
-    {
-        //Debug.Log("We will get this position");
-        mousePos = Input.mousePosition;
+    /*    public void InputInformation()
+        {
+            //Debug.Log("We will get this position");
+            mousePos = Input.mousePosition;
 
-        //we take out mouse screen position in pixels and translate it to a world space position
-        Vector3 worldPos3D = Camera.main.ScreenToWorldPoint(mousePos);
-        Vector2 worldPosition = new Vector2(worldPos3D.x, worldPos3D.y);
+            //we take out mouse screen position in pixels and translate it to a world space position
+            Vector3 worldPos3D = Camera.main.ScreenToWorldPoint(mousePos);
+            Vector2 worldPosition = new Vector2(worldPos3D.x, worldPos3D.y);
 
-        worldPos = worldPosition;
-        targetPosition.position = worldPosition;
+            worldPos = worldPosition;
+            targetPosition.position = worldPosition;
 
-        GetPath();
+            GetPath();
 
-    }
-*/
+        }
+    */
 
     public void MoveToTarget()
     {
@@ -201,6 +230,15 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+
+    public void TakeHurt()
+    {
+        enemyState = EnemyState.HURT;
+
+        enemySprite.color = enemyDeadColor;
+        Debug.Log("Player is hurt");
+    }
+
     public void TakeAttack()
     {
         //Determine if this game object was killed or no
@@ -209,17 +247,118 @@ public class EnemyAI : MonoBehaviour
         //else enemyState = EnemyState.DEAD;
 
         //enemyState = EnemyState.HURT;
+
+        //int damage, if damage > etc.
+
         Debug.Log("Got Hit");
+        enemyState = EnemyState.DOWNED;
+
+        enemySprite.color = enemyKnockedColor;
+
+        //Start Timer for them to get back up
+
 
     }
 
-    public void TakeFinisher()
+
+    /*  public void PlayerSideNoiseMade()
+      {
+          RaycastHit2D[] hit = Physics2D.CircleCastAll(this.transform.position, 7f, Vector2.zero, 0, whatIsComrade);
+          for (int i = 0; i < hit.Length; i++)
+          {
+              if (hit[i].collider.CompareTag("Enemy"))
+              {
+                  GameObject gameObj = hit[i].collider.gameObject;
+                  gameObj.GetComponent<EnemyAI>().GoToNoiseLocation(this.transform.position);
+              }
+          }
+      }
+  */
+
+    public void GoToNoiseLocation(Vector2 noiseLocation)
+    {
+        targetPosition.position = noiseLocation;
+
+        enemyState = EnemyState.ALERT;
+        //GetPath() to there would be activated
+
+    }
+
+
+    public void PlayerSideEngageFinisher()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Space)) // lock out the function entry or something
+        {
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, 3f, Vector2.zero, 0, whatIsComrade);
+            {
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    GameObject enemyObj = hit.collider.gameObject;
+
+                    bool finisherEngaged = enemyObj.GetComponent<EnemyAI>().TakeFinisher();
+                    if (finisherEngaged)
+                    {
+                        //Call our function that will lock other controls until our enemy is dead.
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            //enemy
+        }
+
+        /*if(bashCounter < bashesRequired)
+          {
+          some things are true
+
+
+          }
+          else if (bashCounter > basehesRequired)
+          {
+           things be false, call the TakeFinisher Function, avoid null reference error
+            
+
+          }
+
+           call a fucntion to reset counter and a nullify a game Object target. 
+         */
+    }
+
+
+    public bool TakeFinisher()
+    {
+        if (!inFieldOfView && enemyState != EnemyState.ATTACK)
+        {
+            finishEngaged = true;
+            return finishEngaged;
+        }
+
+        else if (enemyState == EnemyState.DOWNED)
+        {
+            finishEngaged = true;
+            return finishEngaged;
+        }
+        else
+        {
+            Debug.Log("Enemy Downed");
+            finishEngaged = false;
+            return finishEngaged;
+        }
+
+    }
+
+    public void EnemyDeath()
     {
         enemyState = EnemyState.DEAD;
-        
+        BoxCollider2D enemyCollider = this.gameObject.GetComponent<BoxCollider2D>();
 
+        enemyCollider.enabled = false;
+        enemySprite.color = enemyDeadColor;
     }
-
 
 
     public void FaceDirection()
@@ -241,23 +380,23 @@ public class EnemyAI : MonoBehaviour
 
     }
 
+    public void OnYourFeet()
+    {
+        enemyState = EnemyState.PATROL;
+    }
+
     public void Patroling()
     {
 
         //Sensing if in sight range
 
-        if (enemyState != EnemyState.PATROL)
+        if (enemyState == EnemyState.IDLE)
         {
-
-        }
-
-        else if(enemyState == EnemyState.IDLE)
-        {
-
+            targetPosition.position = transform.position;
         }
 
         else if (enemyState == EnemyState.PATROL)
-        { 
+        {
 
             //if we have nowhere to walk to, and have to walk, find walk point
             if (!walkPointSet)
@@ -291,11 +430,16 @@ public class EnemyAI : MonoBehaviour
                 walkPointSet = false;
             }
 
-                //Combat a different error, it in the PATROL state and is stuck for some reason, find new walk point
-                /* if(rb.velocity == Vector2.zero)
-                 {
-                     walkPointSet = false;
-                 }*/
+            //Combat a different error, it in the PATROL state and is stuck for some reason, find new walk point
+            /* if(rb.velocity == Vector2.zero)
+             {
+                 walkPointSet = false;
+             }*/
+        }
+
+        else
+        {
+            Debug.Log("We seem to not be patrolling");
         }
 
     }
@@ -471,10 +615,10 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-  /*  public void IdleLook()
-    {
-        transform.position = Vector3.zero;
-    }*/
+    /*  public void IdleLook()
+      {
+          transform.position = Vector3.zero;
+      }*/
 
     public void PatternSelect(int patternIndex)
     {
@@ -497,7 +641,7 @@ public class EnemyAI : MonoBehaviour
         }
         else if (patternIndex == 4)
         {
-            
+
         }
         else if (patternIndex == 5)
         {
@@ -524,17 +668,17 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-                
+
                 Ray2D ray = new Ray2D(transform.position, rayUp);
-               
+
                 walkPoint = ray.GetPoint(infRayDist);
-               
+
             }
         }
 
         else if (rayIndex == 2)
         {
-            
+
             RaycastHit2D hit = Physics2D.Raycast(transform.position, rayLeft, maxRCLength, whatIsWall);
             if (hit.collider != null)
             {
@@ -641,10 +785,64 @@ public class EnemyAI : MonoBehaviour
 
     }
 
+    private void MeleeAttackPlayer()
+    {
+        if (!alreadyAttacked)
+        {
+
+
+            //Deal Damage to cause the player to have to reset the game
+            //Game Over for player
+
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }
+
+
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
+    }
+
+
+    private void RangedAttackPlayer()
+    {
+        if (!alreadyAttacked)
+        {
+
+            //Fire a projectile at the player, projectile will handle player death
+
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenRangedAttack);
+        }
+    }
+
+
     public void Attacking()
     {
-        enemyState = EnemyState.ATTACK;
+        //enemyState = EnemyState.ATTACK;
+
+        //SetDestintion(playerCharacter.transform.position);
+
+        targetPosition.position = playerCharacter.transform.position;
+
+        inMeleeRange = Physics2D.OverlapCircle(meleePoint.position, meleeRange, whatIsPlayer);
+
+        if (inMeleeRange && !rangedWeapon) //in melee range with a melee weapon
+        {
+            //Perform Melee attacks
+            Invoke(nameof(MeleeAttackPlayer), startupMeleeAttack);
+
+        }
+
+        if (rangedWeapon && playerInSightRange)
+        {
+            Invoke(nameof(RangedAttackPlayer), startupRangedAttack);
+        }
+
     }
+
 
     public void PlayerDetection()
     {
@@ -660,32 +858,88 @@ public class EnemyAI : MonoBehaviour
 
             if (fov_angle < fov_Range)
             {
-                Debug.Log("In field of view");
+                //Debug.Log("In field of view");
                 /*We are within the eyeline of our enemy, one last raycast to see if we have a direct line of fire
                 between us and them, and if we do, we have indeed seen them, and can indeed chase them down*/
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vect2);
-                if(hit.collider.CompareTag("Player"))
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vect2, sightRange, whatIsNear);
+                if (hit.collider != null)
                 {
-                    //We actually managed to see our player in our peripheral
-                    //Become Hostile and attack or move towards player position
-                    inFieldOfView = true;
-                    
+                    if (hit.collider.CompareTag("Player"))
+                    {
+                        //We actually managed to see our player in our peripheral
+                        //Become Hostile and attack or move towards player position
 
+                        inFieldOfView = true;
+                        seenPlayerOnce = true;
+                        //We'll check if we have a weapon
+                        if (weaponEquiped)
+                        {
+                            //enemyState = EnemyState.ATTACK;
+                            Invoke(nameof(SetAttackState), reactionTime);
+                            //SetAttackState();
+                        }
+
+                        seenPlayerTimer = 0;
+
+
+                    }
+                    else
+                    {
+                        //Player is not within their field of view
+                        inFieldOfView = false;
+                    }
                 }
 
             }
 
-         
-        }
-       
-        
-        //playerInSightRange = Physics2D.OverlapBox()
+            else
+            {
+                inFieldOfView = false;
+            }
 
-        //Ray2D straightLine = new Ray2D(transform.position,)
-        
+
+        }
+
+    }
+
+    private void SetAttackState()
+    {
+        if (enemyState != EnemyState.ATTACK)
+        {
+            enemyState = EnemyState.ATTACK;
+        }
+
+    }
+
+    private void SetUnarmedState()
+    {
+        if (enemyState != EnemyState.UNARMED)
+        {
+            enemyState = EnemyState.UNARMED;
+        }
+
     }
 
 
+    private void FindWeapon() // Mix of Patrol && Others
+    {
+        isWeaponAround = Physics2D.OverlapCircle(transform.position, sightRange / 2, whatIsWeapon);
+
+        if (isWeaponAround)
+        {
+            //Find out if its in an equipable state. Walk towards it and pick it up
+        }
+        /* else if()            
+         {
+             //Check if the player has a weapon equiped and is within our weapon range
+             //in such a case, //make cautious walk pattern
+
+         }*/
+        else
+        {
+            //Do some basic patrolling
+        }
+    }
 
 
     // Start is called before the first frame update
@@ -702,19 +956,25 @@ public class EnemyAI : MonoBehaviour
 
         enemySprite = GetComponentInChildren<SpriteRenderer>();
 
-        enemyDefault = enemySprite.color;
+        enemyDefaultColor = enemySprite.color;
         //enemySprite.color = Color.white;
 
         //FaceDirection();
 
         walkPointSet = false;
-        walkPoint = new Vector2(transform.position.x,transform.position.y);
+        walkPoint = new Vector2(transform.position.x, transform.position.y);
 
         processingDest = false;
 
+        seenPlayerOnce = false;
+
+        alreadyAttacked = false;
+
         //playerCharacter = GameObject.Find("Player");
 
-        //enemyState = EnemyState.PATROL;
+
+        InvokeRepeating("GetPath", 0f, 0.5f);
+        startupState = this.enemyState;
 
     }
 
@@ -722,29 +982,71 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
 
+        knockedDownTimer += Time.deltaTime;
+        seenPlayerTimer += Time.deltaTime;
+
+
+        if (enemyState == EnemyState.DOWNED && !finishEngaged)
+        {
+            if (knockedDownTimer > downedTime)
+            {
+                OnYourFeet();
+
+            }
+        }
+
         PlayerDetection();
 
-       /* if (Input.GetMouseButtonDown(0))
-        {
-            //Debug.Log("Some Input");
-            InputInformation();
-        }*/
+        /* if (Input.GetMouseButtonDown(0))
+         {
+             //Debug.Log("Some Input");
+             InputInformation();
+         }*/
 
-        if (!playerInSightRange && !inFieldOfView)
+        /*  if (!playerInSightRange && !inFieldOfView)
+          {
+
+              Patroling();
+          }*/
+
+        if ((!playerInSightRange || !inFieldOfView) && weaponEquiped)
         {
 
-            Patroling();
+            if (seenPlayerOnce)
+            {
+                if (seenPlayerTimer > forgetPlayerTime)
+                {
+                    enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once
+                    Patroling();
+                }
+
+            }
+            else
+            {
+
+                /* if (playerInSightRange || !inFieldOfView)*/
+                enemyState = startupState;
+                Patroling();
+            }
+
+
         }
 
-        if (playerInSightRange && !inFieldOfView)
-        {
-            Patroling();
-            //sensing will control FieldOfView
-        }
+        /*   if (playerInSightRange && inFieldOfView)
+           {
+               Attacking();
+           }*/
 
-        if (playerInSightRange && inFieldOfView)
+        if (enemyState == EnemyState.ATTACK)
         {
             Attacking();
+        }
+
+
+        if (!weaponEquiped)
+        {
+            SetUnarmedState();
+            FindWeapon();
         }
 
     }
@@ -754,29 +1056,33 @@ public class EnemyAI : MonoBehaviour
     {
         //
 
+
         MoveToTarget();
 
 
     }
 
-   /* private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position,sightRange);
+    /* private void OnDrawGizmos()
+     {
+         Gizmos.color = Color.yellow;
+         Gizmos.DrawWireSphere(transform.position,sightRange);
 
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawRay(transform.position, referencePoint.position - transform.position);
-        Gizmos.DrawRay(transform.position, playerCharacter.transform.position - transform.position);
+         Gizmos.color = Color.magenta;
+         Gizmos.DrawRay(transform.position, referencePoint.position - transform.position);
+         Gizmos.DrawRay(transform.position, playerCharacter.transform.position - transform.position);
 
-    }*/
+     }*/
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.yellow; //Sight Range
         Gizmos.DrawWireSphere(transform.position, sightRange);
 
-        Gizmos.color = Color.magenta;
+        Gizmos.color = Color.magenta; //Field Of View Angles
         Gizmos.DrawRay(transform.position, referencePoint.position - transform.position);
         Gizmos.DrawRay(transform.position, playerCharacter.transform.position - transform.position);
+
+        Gizmos.color = Color.cyan; // Enemy Melee Range
+        Gizmos.DrawWireSphere(meleePoint.position, meleeRange);
     }
 }
