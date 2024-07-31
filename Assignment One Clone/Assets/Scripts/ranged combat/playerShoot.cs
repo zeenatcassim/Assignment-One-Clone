@@ -16,12 +16,15 @@ public class playerShoot : MonoBehaviour
     //Firing speed - float
     public float firingSpeed;
 
+    //reference to gun ammo script
+    public gunAmmo gun;
  
 
     // Start is called before the first frame update
     void Start()
     {
         picked = FindAnyObjectByType<pickUpGun>();
+        gun = FindAnyObjectByType<gunAmmo>();
     }
 
     // Update is called once per frame
@@ -36,6 +39,7 @@ public class playerShoot : MonoBehaviour
         else if(picked.pickedUpGun == false )
         {
            // Debug.Log("Gun out of order");
+           
            //can throw gun
         }
     }
@@ -44,16 +48,16 @@ public class playerShoot : MonoBehaviour
     {
         //Instantiate a bullet at firepoint's position + rotation
         GameObject bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-     
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.up * firingSpeed, ForceMode2D.Impulse);
 
-        picked.ammoAvailable--;
+         picked.ammoAvailable--;
 
-        if (picked.ammoAvailable ==0)
+        if (picked.ammoAvailable == 0)
         {
-            picked.pickedUpGun = false;
+            picked.AmmoDepleted();
         }
+
     }
 
     void CalculateScore()

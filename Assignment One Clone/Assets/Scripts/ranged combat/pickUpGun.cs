@@ -13,13 +13,14 @@ public class pickUpGun : MonoBehaviour
    // public Transform firePoint;
     public int ammoAvailable;
 
-  
- 
+    //reference to gun ammo script
+    public gunAmmo gun;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gun = FindAnyObjectByType<gunAmmo>();   
     }
 
     // Update is called once per frame
@@ -29,6 +30,8 @@ public class pickUpGun : MonoBehaviour
         if (canPickUpGun && Input.GetMouseButtonDown(1)) //right mouse button
         {
             PickUpGun();
+            
+            ammoAvailable = gun.maxAmmo;
         }
         
     }
@@ -39,7 +42,7 @@ public class pickUpGun : MonoBehaviour
         {
             canPickUpGun = true;
             currentPickUpCollider = collision;
-            ammoAvailable = 17;
+            
         }
     }
 
@@ -54,6 +57,11 @@ public class pickUpGun : MonoBehaviour
 
     private void PickUpGun()
     {
+        if (gunPrefab != null && currentPickUpCollider != null)
+        {
+
+           // if (gunInstance != null){Destroy(gunInstance); }
+
         gunInstance = Instantiate(gunPrefab, transform);
 
         //what needed to initially put in:
@@ -64,6 +72,16 @@ public class pickUpGun : MonoBehaviour
         Destroy(currentPickUpCollider.gameObject);
         canPickUpGun = false;
         pickedUpGun = true;
+        }
+        
+    }
+
+    public void AmmoDepleted()
+    {
+        ammoAvailable = 0;
+        Destroy(gunInstance);
+       // gun = null;
+        pickedUpGun = false;
     }
 
 }
