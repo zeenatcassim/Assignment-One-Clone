@@ -60,6 +60,8 @@ public class playerShoot : MonoBehaviour
 
     }
 
+ 
+
     void CalculateScore()
     {
         //distance
