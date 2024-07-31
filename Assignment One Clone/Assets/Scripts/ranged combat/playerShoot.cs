@@ -39,20 +39,16 @@ public class playerShoot : MonoBehaviour
         {
             Shoot();
         }
-        else if(picked.pickedUpGun == false )
-        {
-           // Debug.Log("Gun out of order");
-           
-           //can throw gun
-        }
+       
     }
 
-    void Shoot()
+    public void Shoot()
     {
         //Instantiate a bullet at firepoint's position + rotation
         GameObject bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.up * firingSpeed, ForceMode2D.Impulse);
+        //sound
 
          picked.ammoAvailable--;
 
