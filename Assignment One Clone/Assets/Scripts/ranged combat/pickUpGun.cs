@@ -99,10 +99,6 @@ public class pickUpGun : MonoBehaviour
 
         if (gunPrefab != null && currentPickUpCollider != null)
         {
-            canPickUpGun = false;
-
-          
-
             gunInstance = Instantiate(gunPrefab, transform);
 
             //what needed to initially put in:
@@ -121,6 +117,8 @@ public class pickUpGun : MonoBehaviour
             Destroy(currentPickUpCollider.gameObject);
            
             pickedUpGun = true;
+            canPickUpGun = false;
+
            // canThrowGun = true;
         }
        
@@ -140,8 +138,13 @@ public class pickUpGun : MonoBehaviour
 
     public void ThrowGunAtEnemy()
     {
-       
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (gunInstance == null)
+        {
+            Debug.Log("Gun instance is null");
+            return;
+        }
+
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2 throwDirection = (mousePosition - (Vector2)transform.position).normalized;
 
@@ -156,16 +159,25 @@ public class pickUpGun : MonoBehaviour
         
         if (rb != null)
         {
-            //Debug.Log("can throw");
-            // rb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
+           // Debug.Log("can throw");
+           //  rb.AddForce(throwDirection * throwSpeed, ForceMode2D.Impulse);
+
             rb.gravityScale = 0;
             rb.isKinematic = false;
             rb.velocity = throwDirection * throwSpeed;
 
+            Debug.DrawLine(transform.position, mousePosition, Color.red, 2f);
+
+            Debug.DrawLine(transform.position, (Vector2)transform.position + throwDirection * 5f, Color.green, 2f);
+
+
             Destroy(gunInstance, 2f);
             canThrowGun = false;
         }
-
+        else
+        {
+            Debug.LogError("Failed to add or find Rigidbody2D on the gun instance.");
+        }
        
         
     }

@@ -53,6 +53,8 @@ public class playerShoot : MonoBehaviour
 
         picked.ammoAvailable--;
 
+        //play animation
+        //sound
         if (picked.ammoAvailable ==0)
         {
             //  picked.pickedUpGun = false;
