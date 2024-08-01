@@ -16,6 +16,8 @@ public class playerShoot : MonoBehaviour
     //Firing speed - float
     public float firingSpeed;
 
+    public LayerMask whatIsComrade;
+
     //nrOfRounds- int?
 
   //  public GameObject playerPos;
