@@ -24,8 +24,8 @@ public class pickUpGun : MonoBehaviour
     //reference to playerShoot
     public playerShoot shoot;
 
-    public float throwForce = 20f;
-    public float enemyDetectionRadius = 5f;
+    public float throwSpeed = 10f;
+   // public float enemyDetectionRadius = 5f;
     public bool canThrowGun;
 
     public Rigidbody2D rb;
@@ -36,7 +36,7 @@ public class pickUpGun : MonoBehaviour
     {
         gun = FindAnyObjectByType<gunAmmo>();
         shoot = FindAnyObjectByType<playerShoot>();
-        canThrowGun = true;
+       // canThrowGun = true;
     }
 
     // Update is called once per frame
@@ -53,11 +53,16 @@ public class pickUpGun : MonoBehaviour
             }
         }
 
-        if (canThrowGun)
+        if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Trying to throw the gun");
-           // ThrowGunAtEnemy();
+            if (canThrowGun)
+            {
+                Debug.Log("Trying to throw the gun");
+               ThrowGunAtEnemy();
+             }
+
         }
+           
 
     }
 
@@ -106,6 +111,7 @@ public class pickUpGun : MonoBehaviour
             Destroy(currentPickUpCollider.gameObject);
             canPickUpGun = false;
             pickedUpGun = true;
+            canThrowGun = true;
         }
 
     }
@@ -124,19 +130,33 @@ public class pickUpGun : MonoBehaviour
 
     public void ThrowGunAtEnemy()
     {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+       
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2 throwDirection = (mousePosition - (Vector2)transform.position).normalized;
 
-       // Debug.Log(mousePosition);
-        Debug.Log(throwDirection);
+        // Debug.Log(mousePosition);
+        // Debug.Log(throwDirection);
 
-        if (gunInstance.GetComponent<Rigidbody2D>() == null) { gunInstance.AddComponent<Rigidbody2D>(); }
-       // Rigidbody2D rb = gunInstance.GetComponent<Rigidbody2D>();
-          if (rb != null)
+        Debug.Log(gunInstance);
+
+       if (gunInstance.GetComponent<Rigidbody2D>() == null) { gunInstance.AddComponent<Rigidbody2D>(); }
+        Rigidbody2D rb = gunInstance.GetComponent<Rigidbody2D>(); 
+        Debug.Log(rb);
+        
+        if (rb != null)
         {
-           rb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
+            //Debug.Log("can throw");
+            // rb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
+            rb.gravityScale = 0;
+            rb.isKinematic = false;
+            rb.velocity = throwDirection * throwSpeed;
+
+            Destroy(gunInstance, 2f);
         }
+
+       
+        
     }
 
 }
