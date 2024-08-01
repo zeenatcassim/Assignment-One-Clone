@@ -110,6 +110,10 @@ public class EnemyAI : MonoBehaviour
     int bashCounter;
     int bashesRequired; //Function that will set up how many bashes we require
 
+    //Shooting Player
+    public GameObject bulletPrefab;
+    public float fireSpeed;
+
 
     void UpdatePath()
     {
@@ -847,6 +851,12 @@ public class EnemyAI : MonoBehaviour
         if (!alreadyAttacked)
         {
 
+            inMeleeRange = Physics2D.OverlapCircle(meleePoint.position,meleeRange,whatIsPlayer);
+            if (inMeleeRange)
+            {
+                //Game over for our player character
+                playerCharacter.GetComponent<playerMovement>().GameOver();
+            }
 
             //Deal Damage to cause the player to have to reset the game
             //Game Over for player
@@ -869,6 +879,19 @@ public class EnemyAI : MonoBehaviour
         {
 
             //Fire a projectile at the player, projectile will handle player death
+            GameObject firedBulled = Instantiate(bulletPrefab, meleePoint.position, meleePoint.rotation);
+      
+            Rigidbody2D rb = firedBulled.GetComponent<Rigidbody2D>();
+
+            rb.AddForce(meleePoint.up * fireSpeed, ForceMode2D.Impulse);
+
+            RaycastHit2D hitScan = Physics2D.Raycast(meleePoint.position, meleePoint.up, sightRange, whatIsPlayer);
+
+            if(hitScan.collider.CompareTag("Player"))
+            {
+                //Game over for our player character
+                playerCharacter.GetComponent<playerMovement>().GameOver();
+            }
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenRangedAttack);

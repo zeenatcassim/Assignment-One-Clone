@@ -17,8 +17,6 @@ public class playerMovement : MonoBehaviour
     public LayerMask whatIsComrade;
 
 
-
-
     // Update is called once per frame
     void Update()
     {
@@ -88,6 +86,11 @@ public class playerMovement : MonoBehaviour
 
            call a fucntion to reset counter and a nullify a game Object target. 
          */
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("Player Would have died/Respawned");
     }
 
     private void FixedUpdate()
