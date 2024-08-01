@@ -1737,7 +1737,7 @@ MonoBehaviour:
   ammoAvailable: 5
   gun: {fileID: 0}
   shoot: {fileID: 0}
-  throwForce: 10
+  throwSpeed: 10
   canThrowGun: 0
   rb: {fileID: 0}
 --- !u!114 &1763380400
