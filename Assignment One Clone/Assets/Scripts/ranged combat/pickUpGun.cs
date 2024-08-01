@@ -53,9 +53,12 @@ public class pickUpGun : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) //left mouse button
         {
-            if (canThrowGun)
+            if (pickedUpGun)
+            {
+                shoot.Shoot();
+            }else if (canThrowGun)
             {
                 Debug.Log("Trying to throw the gun");
                ThrowGunAtEnemy();
@@ -88,10 +91,17 @@ public class pickUpGun : MonoBehaviour
     }
 
     private void PickUpGun()
-    {
+    { 
+        if (gunInstance != null) {
+            Debug.Log("Already has a gun");
+            return;
+        }
+
         if (gunPrefab != null && currentPickUpCollider != null)
         {
-            if (gunInstance != null) { Destroy(gunInstance); }
+            canPickUpGun = false;
+
+          
 
             gunInstance = Instantiate(gunPrefab, transform);
 
@@ -109,11 +119,11 @@ public class pickUpGun : MonoBehaviour
                 rb.isKinematic = true;
             }
             Destroy(currentPickUpCollider.gameObject);
-            canPickUpGun = false;
+           
             pickedUpGun = true;
-            canThrowGun = true;
+           // canThrowGun = true;
         }
-
+       
     }
 
     public void AmmoDepleted()
@@ -123,7 +133,7 @@ public class pickUpGun : MonoBehaviour
         //Destroy(gunInstance);
         // gun = null;
         pickedUpGun = false;
-        //canThrowGun = true;
+        canThrowGun = true;
 
         //  if (Input.GetMouseButtonDown(1))  {  ThrowGunAtEnemy();  }
     }
@@ -153,6 +163,7 @@ public class pickUpGun : MonoBehaviour
             rb.velocity = throwDirection * throwSpeed;
 
             Destroy(gunInstance, 2f);
+            canThrowGun = false;
         }
 
        

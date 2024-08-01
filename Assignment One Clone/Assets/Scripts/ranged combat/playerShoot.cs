@@ -43,7 +43,7 @@ public class playerShoot : MonoBehaviour
         }
     }
 
-    void Shoot()
+    public void Shoot()
     {
         //Instantiate a bullet at firepoint's position + rotation
         GameObject bullet = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
@@ -55,13 +55,10 @@ public class playerShoot : MonoBehaviour
 
         if (picked.ammoAvailable ==0)
         {
-            picked.pickedUpGun = false;
+            //  picked.pickedUpGun = false;
+            picked.AmmoDepleted();
         }
     }
 
-    void CalculateScore()
-    {
-        //distance
-        // Vector2 playPosition = new Vector2(playerPos.position)
-    }
+ 
 }
