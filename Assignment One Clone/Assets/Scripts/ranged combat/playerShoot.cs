@@ -62,5 +62,18 @@ public class playerShoot : MonoBehaviour
         }
     }
 
- 
+    public void PlayerSideNoiseMade()
+    {
+        RaycastHit2D[] hit = Physics2D.CircleCastAll(this.transform.position, 7f, Vector2.zero, 0, whatIsComrade);
+        for (int i = 0; i < hit.Length; i++)
+        {
+            if (hit[i].collider.CompareTag("Enemy"))
+            {
+                GameObject gameObj = hit[i].collider.gameObject;
+                gameObj.GetComponent<EnemyAI>().GoToNoiseLocation(this.transform.position);
+            }
+        }
+    }
+
+
 }

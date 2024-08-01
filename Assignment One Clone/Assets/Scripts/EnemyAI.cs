@@ -633,6 +633,8 @@ public class EnemyAI : MonoBehaviour
     {
         //We may have to call it repeatedly, Callbacks and/or loops, with timers controlling increments
 
+        scanningArea = true; //making it true
+
         int xComp, yComp;
         xComp = Random.Range(-1, 1);
         yComp = Random.Range(-1, 1);
@@ -687,7 +689,7 @@ public class EnemyAI : MonoBehaviour
         }
         else if (patternIndex == 4)
         {
-
+            Pat4ScanPattern();
         }
         else if (patternIndex == 5)
         {
@@ -829,6 +831,8 @@ public class EnemyAI : MonoBehaviour
     public void WalkStyle()
     {
         //Exists to change our walk pattern
+        walkPattern = Random.Range(1, 4);
+        Debug.Log("New Walk Pattern");
     }
 
     public void AlertedWalkStyleChange()
@@ -1081,18 +1085,22 @@ public class EnemyAI : MonoBehaviour
         if ((!playerInSightRange || !inFieldOfView) && weaponEquiped)
         {
 
-            if (seenPlayerOnce) //(might be an unnecessary condition)
-            {
+           
                 if (seenPlayerTimer > forgetPlayerTime) //aftert this much time of not seeing the player, go back to patrolling
                 {
 
                     enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once 
 
-                    WalkStyle(); // Change of Walk Pattern
+                if (seenPlayerOnce)
+                {
+                    WalkStyle(); // Change of Walk Pattern, we have to call it only once so we only change walk style when this is called
+                    seenPlayerOnce=false; //reset so that we can reactivate it when we see the player again and change our walk pattern again
+                }
+                  
                     Patroling();
                 }
 
-            }
+            
             /*     else
                  {
 
