@@ -27,6 +27,11 @@ public class playerShoot : MonoBehaviour
     void Start()
     {
         picked = FindAnyObjectByType<pickUpGun>();
+
+        if(whatIsComrade != LayerMask.NameToLayer("Enemy"))  //can comment out this line after setting layer mask to enemy layer in inspector
+        {
+            whatIsComrade = LayerMask.NameToLayer("Enemy");
+        }
     }
 
     // Update is called once per frame
@@ -61,6 +66,10 @@ public class playerShoot : MonoBehaviour
         {
             //  picked.pickedUpGun = false;
             picked.AmmoDepleted();
+        }
+        else
+        {
+            PlayerSideNoiseMade();  // If ammo is available, make noise for our enemy to hear
         }
     }
 
