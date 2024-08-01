@@ -24,6 +24,11 @@ public class gunTrigger : MonoBehaviour
         }
     }
 
+    public bool GetGunState()
+    {
+        return isEquiped;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

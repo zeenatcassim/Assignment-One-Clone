@@ -37,7 +37,7 @@ public class EnemyAI : MonoBehaviour
     float distanceToWaypoint;
 
     //Layers
-    public LayerMask whatIsPlayer, whatIsWall, whatIsComrade, whatIsNear, whatIsWeapon;
+    public LayerMask whatIsPlayer, whatIsWall, whatIsComrade, whatIsNear, whatIsWeapon, whatIsMap;
 
     //Reference To Player, and FOVpivot
     public GameObject playerCharacter;
@@ -116,6 +116,17 @@ public class EnemyAI : MonoBehaviour
 
     //Picking Up Guns Completion
     gunTrigger gunNearState;
+    public Transform pickUpDestination;
+    GameObject gunDetected;
+    GameObject sameGunDetected;
+    bool walkToPickUp;
+
+    public GameObject meleePrefab;
+    public GameObject gunPrefab;
+
+
+    //Vector2 dropPosition;
+    //public Transform defaultDropPosition; will use melee position instead
 
     void UpdatePath()
     {
@@ -267,9 +278,52 @@ public class EnemyAI : MonoBehaviour
 
         enemySprite.color = enemyKnockedColor;
 
+        DropWeapons();
+
         //Start Timer for them to get back up
 
 
+    }
+
+
+    private void DropWeapons()
+    {
+        if (weaponEquiped)
+        {
+           
+            weaponEquiped = false;
+            bool dropPositionFound = SearchDropPosition();
+            if (dropPositionFound)
+            {
+                if (rangedWeapon)
+                {
+                    //instatiate our gun
+                    //give them a position
+                }
+                else
+                {
+                    //instantiate our melee weapon 
+                }
+            }
+
+            else
+            {
+                //Just instatiate at like default drop position which will be our melee position
+            }
+
+        }
+    }
+
+
+    public bool SearchDropPosition()
+    {
+        float x = Random.Range(-3, +3);
+        float y = Random.Range(-3, +3);
+
+        bool mapPoint = Physics2D.Raycast(new Vector2(transform.position.x + x, transform.position.y + y), Vector2.zero);
+        pickUpDestination.position = new Vector2(transform.position.x + x, transform.position.y + y);
+
+        return mapPoint;
     }
 
 
@@ -1041,12 +1095,67 @@ public class EnemyAI : MonoBehaviour
                 if(hit[i].collider != null)
                 {
                     GameObject getWeapon = hit[i].collider.gameObject;
-                    //getWeapon.GetComponent<>  // see if the weapon is not in the players hands, (check if it has enough ammo ?)
+                    //getWeapon.GetComponent<>  // see if the weapon is not in the players hands,
+                    gunNearState = getWeapon.GetComponent<gunTrigger>();
+
+                    bool canWePickUp = gunNearState.GetGunState();
+                    if (canWePickUp == true)
+                    {
+                        //Go to its location and call the pick up function
+                        targetPosition.position = getWeapon.transform.position;
+                        pickUpDestination.position = targetPosition.position;
+                        gunDetected = getWeapon;
+                        walkToPickUp = true;
+                    }
                 }
             }
           
            
 
+        }
+
+        if (walkToPickUp)
+        {
+            Vector2 distanceToPickUp = pickUpDestination.position - transform.position;
+            if(distanceToPickUp.magnitude < 2f)
+            {
+                //Pickup our weapon we targeted 
+                RaycastHit2D[] hit = Physics2D.CircleCastAll(transform.position, 2f, Vector2.zero,0,whatIsWeapon);
+
+                for(int j = 0; j < hit.Length; j++)
+                {
+                    if(hit [j].collider != null)
+                    {
+                        if(gunDetected == hit [j].collider.gameObject)
+                        {
+                            //Pick it up 
+                            weaponEquiped = true;
+                            gunDetected.gameObject.GetComponent<gunTrigger>().EquipedGun();
+
+                            //Needs to indicate type
+
+                            //Will destroy it in world if need be 
+
+                            //And when hit, all that we'll do is just reinstantiate a new gun in the world, we can save states of the weapon if need be
+                            //However scriptable objects should be taking care of information such as this
+
+
+                            walkToPickUp = false;
+                            
+                        }
+                    }
+                }
+               
+            }
+
+                //checking how close we are to our walk point
+             /*   Vector2 distanceToWalkPoint = walkPoint - transform.position;
+
+            if ((distanceToWalkPoint.magnitude < turnRange) && !scanningArea) //and the area is not being scanned
+            {
+                //when close enough, find a new point to walk to
+                walkPointSet = false;
+            }*/
         }
         /* else if()            
          {
@@ -1056,7 +1165,42 @@ public class EnemyAI : MonoBehaviour
          }*/
         else
         {
-            //Do some basic patrolling
+            //Do some basic patrolling while unarmed
+            walkToPickUp=false;
+
+
+            //if we have nowhere to walk to, and have to walk, find walk point
+            if (!walkPointSet)
+            {
+                //Debug.Log("should be searching");
+                SearchWalkPoint();
+                //SearchWalkPoint();
+            }
+
+            //with a walk point, walk towards that point
+            if (walkPointSet)
+            {
+                if (processingDest)
+                {
+
+                }
+                else
+                {
+                    SetDestintion(walkPoint);
+                    //Debug.Log("Walk Point" + walkPoint);
+                }
+
+            }
+
+            //checking how close we are to our walk point
+            Vector2 distanceToWalkPoint = walkPoint - transform.position;
+
+            if ((distanceToWalkPoint.magnitude < turnRange) && !scanningArea) //and the area is not being scanned
+            {
+                //when close enough, find a new point to walk to
+                walkPointSet = false;
+            }
+
         }
     }
 
@@ -1093,6 +1237,12 @@ public class EnemyAI : MonoBehaviour
 
         //playerCharacter = GameObject.Find("Player");
 
+        if(pickUpDestination == null)
+        {
+            pickUpDestination = targetPosition;
+        }
+       
+        
 
         InvokeRepeating("GetPath", 0f, 1f);
         startupState = this.enemyState;
