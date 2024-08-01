@@ -51,6 +51,13 @@ public class pickUpGun : MonoBehaviour
                 ammoAvailable = gun.maxAmmo;
 
             }
+
+            if (canThrowGun)
+            {
+                Debug.Log("Trying to throw the gun");
+               ThrowGunAtEnemy();
+             }
+
         }
 
         if (Input.GetMouseButtonDown(0)) //left mouse button
@@ -58,11 +65,7 @@ public class pickUpGun : MonoBehaviour
             if (pickedUpGun)
             {
                 shoot.Shoot();
-            }else if (canThrowGun)
-            {
-                Debug.Log("Trying to throw the gun");
-               ThrowGunAtEnemy();
-             }
+            }
 
         }
            
@@ -119,7 +122,7 @@ public class pickUpGun : MonoBehaviour
             pickedUpGun = true;
             canPickUpGun = false;
 
-           // canThrowGun = true;
+          //  canThrowGun = true;
         }
        
     }
@@ -130,8 +133,9 @@ public class pickUpGun : MonoBehaviour
         ammoAvailable = 0;
         //Destroy(gunInstance);
         // gun = null;
-        pickedUpGun = false;
-        canThrowGun = true;
+        pickedUpGun = true;
+
+       // canThrowGun = true;
 
         //  if (Input.GetMouseButtonDown(1))  {  ThrowGunAtEnemy();  }
     }
@@ -148,8 +152,8 @@ public class pickUpGun : MonoBehaviour
 
         Vector2 throwDirection = (mousePosition - (Vector2)transform.position).normalized;
 
-        // Debug.Log(mousePosition);
-        // Debug.Log(throwDirection);
+         Debug.Log(mousePosition);
+         Debug.Log(throwDirection);
 
         Debug.Log(gunInstance);
 
@@ -159,20 +163,21 @@ public class pickUpGun : MonoBehaviour
         
         if (rb != null)
         {
-           // Debug.Log("can throw");
+            Debug.Log("can throw");
            //  rb.AddForce(throwDirection * throwSpeed, ForceMode2D.Impulse);
 
             rb.gravityScale = 0;
             rb.isKinematic = false;
             rb.velocity = throwDirection * throwSpeed;
+            Debug.Log(rb.velocity);
 
             Debug.DrawLine(transform.position, mousePosition, Color.red, 2f);
-
             Debug.DrawLine(transform.position, (Vector2)transform.position + throwDirection * 5f, Color.green, 2f);
 
 
-            Destroy(gunInstance, 2f);
+           // Destroy(gunInstance, 2f);
             canThrowGun = false;
+            pickedUpGun = false;
         }
         else
         {
