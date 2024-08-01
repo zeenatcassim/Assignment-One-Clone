@@ -5546,6 +5546,93 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &823363597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 823363599}
+  - component: {fileID: 823363598}
+  m_Layer: 0
+  m_Name: A* Control Station
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &823363598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823363597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78396926cbbfc4ac3b48fc5fc34a87d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  data:
+    dataString: UEsDBBQAAAgIAAAQIezXmxC0XQIAABYFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VEtz2jAQ/iuMzk3GvElvrUNIDwQmpJOLL8JaYw2y5NGDV4b/3pVsY5dOTyzffrv77UP+IlyaElKr9EJztlQMyPce8Tb51mudr3CiOyU3/AIN55Mzm3sSDZx3arlCvO/DjCrAap7+kDvhyRGCTvJM6WLOdhArYw3CGRUG0KWV9dESoa8eOeHPw5MPOaM1mHrrgtZT1LuimYK0oFtqQ2xoFcvJVNCiBOYlt+RRwx5WNInN1IzoceyzKyG4qbUQey5DrzEtjcNOkMA4xd6CgP7jAIEc+C63Xmk3fJVlBmwtS9PzM9c4pCov+amqyRXU7CttByqcrzQYT4KuKunyH/9DP7gzrYrXpm4/8jVsztP9Oz2n1NjOaLvwc0d6GNGRij3dCvjMQb6phVZOMnRa7XyoMzB4bv/eWotzSPctXkm9A135/wX5Hq6h+1MseLENsx9VwEaoMPGwftC4nV8oOByHqVMg6lX8NvBBd90rqh0vXBuLrrpL6eVtldOeSuZhZr4bZ2OlJQS4Fl2CpMKe15jG3q/wztcpe+d5of691MVrX/MM7kIC3PKj6M61Vsfbskyujksw+cpZwSW0or3jDecUKymrC+vOpAnbOJ3RtBO2c5z9fVpkMJ2x7YiyyawfbUfjycMwGw6nbDjdsmkGs1lGwu1xiX1Ssa6E1uPBrck2ucQ7az4jvYWmZbh2pulxwS+F6oycy0xtUg0gV1WGm3DQWARfJpszjgPagLVchn2Tr4QIle6BJbdESeh0frKaJm2WhJT8oKxHEhKH70ZCPHy75bWGA4ejL94ku5LrH1BLAwQUAAAICAAAECHsXQJuJm0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0kpG5RUqSSWKKmYWhQZKJqZmucZqxsXmKsXlSinlaqoVFmlIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAECHs15sQtF0CAAAWBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAECHsXQJuJm0AAAB4AAAACQAkAAAAAAAAAAAAAACqAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAGIDAAAAAA==
+    upgradeData: 
+    file_cachedStartup: {fileID: 0}
+    data_cachedStartup: 
+    cacheStartup: 0
+  showNavGraphs: 1
+  showUnwalkableNodes: 1
+  debugMode: 0
+  debugFloor: 0
+  debugRoof: 1
+  manualDebugFloorRoof: 0
+  showSearchTree: 0
+  unwalkableNodeDebugSize: 0.3
+  logPathResults: 0
+  maxNearestNodeDistance: 100
+  scanOnStartup: 1
+  fullGetNearestSearch: 0
+  prioritizeGraphs: 0
+  prioritizeGraphsLimit: 1
+  colorSettings:
+    _SolidColor: {r: 0.106308244, g: 0.43811095, b: 0.89433956, a: 0.61960787}
+    _UnwalkableNode: {r: 1, g: 0, b: 0, a: 0.5}
+    _BoundsHandles: {r: 0.29, g: 0.454, b: 0.741, a: 0.9}
+    _ConnectionLowLerp: {r: 0, g: 1, b: 0, a: 0.5}
+    _ConnectionHighLerp: {r: 1, g: 0, b: 0, a: 0.5}
+    _MeshEdgeColor: {r: 0, g: 0, b: 0, a: 0.5}
+    _AreaColors:
+    - {r: 0, g: 0, b: 0, a: 0}
+  tagNames: []
+  heuristic: 2
+  heuristicScale: 1
+  threadCount: 1
+  maxFrameTime: 10
+  batchGraphUpdates: 0
+  graphUpdateBatchingInterval: 0.2
+  euclideanEmbedding:
+    mode: 0
+    seed: 0
+    pivotPointRoot: {fileID: 0}
+    spreadOutCount: 1
+  showGraphs: 1
+--- !u!4 &823363599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823363597}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &826023706
 GameObject:
   m_ObjectHideFlags: 0
@@ -25694,6 +25781,9 @@ MonoBehaviour:
   rb: {fileID: 1763380396}
   cam: {fileID: 519420031}
   animator: {fileID: 1763380399}
+  whatIsComrade:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!50 &1763380396
 Rigidbody2D:
   serializedVersion: 4
@@ -26218,6 +26308,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 823363599}
   - {fileID: 519420032}
   - {fileID: 1763380398}
   - {fileID: 2083717148}
