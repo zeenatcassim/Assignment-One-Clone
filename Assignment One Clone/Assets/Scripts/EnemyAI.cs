@@ -114,6 +114,8 @@ public class EnemyAI : MonoBehaviour
     public GameObject bulletPrefab;
     public float fireSpeed;
 
+    //Picking Up Guns Completion
+    gunTrigger gunNearState;
 
     void UpdatePath()
     {
@@ -1028,10 +1030,23 @@ public class EnemyAI : MonoBehaviour
     private void FindWeapon() // Mix of Patrol && Others
     {
         isWeaponAround = Physics2D.OverlapCircle(transform.position, sightRange / 2, whatIsWeapon);
+       
 
         if (isWeaponAround)
         {
+            RaycastHit2D[] hit = Physics2D.CircleCastAll(transform.position, sightRange / 2, Vector2.zero, 0, whatIsWeapon);
             //Find out if its in an equipable state. Walk towards it and pick it up
+            for(int i = 0; i < hit.Length; i++)
+            {
+                if(hit[i].collider != null)
+                {
+                    GameObject getWeapon = hit[i].collider.gameObject;
+                    //getWeapon.GetComponent<>  // see if the weapon is not in the players hands, (check if it has enough ammo ?)
+                }
+            }
+          
+           
+
         }
         /* else if()            
          {

@@ -31,6 +31,9 @@ public class pickUpGun : MonoBehaviour
     public Rigidbody2D rb;
 
 
+    gunTrigger equipedGun;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -109,6 +112,10 @@ public class pickUpGun : MonoBehaviour
             gunInstance.transform.localScale = new Vector3(0.17f, 0.07f, 0);
             gunInstance.transform.localRotation = Quaternion.identity;
 
+            //for enemy to know state of gun
+            equipedGun = gunInstance.GetComponent<gunTrigger>();
+            equipedGun.EquipedGun();
+
             //  if (gunInstance.GetComponent<Rigidbody2D>() == null)   {   gunInstance.AddComponent<Rigidbody2D>(); }
 
             Rigidbody2D rb = gunInstance.GetComponent<Rigidbody2D>();
@@ -173,6 +180,10 @@ public class pickUpGun : MonoBehaviour
 
             Debug.DrawLine(transform.position, mousePosition, Color.red, 2f);
             Debug.DrawLine(transform.position, (Vector2)transform.position + throwDirection * 5f, Color.green, 2f);
+
+
+            //Let enemy know they can probably pick up this gun now
+            equipedGun.UnEquipGun();
 
 
            // Destroy(gunInstance, 2f);

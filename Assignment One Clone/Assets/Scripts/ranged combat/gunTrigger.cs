@@ -4,6 +4,26 @@ using UnityEngine;
 
 public class gunTrigger : MonoBehaviour
 {
+
+    public bool isEquiped;
+
+
+    public void EquipedGun()
+    {
+        if (!isEquiped)
+        {
+            isEquiped = true;
+        }
+    }
+
+    public void UnEquipGun()
+    {
+        if (isEquiped)
+        {
+            isEquiped=false;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +37,8 @@ public class gunTrigger : MonoBehaviour
         {
             Debug.Log("No collider found on Gun object");
         }
+
+
     }
 
     // Update is called once per frame
