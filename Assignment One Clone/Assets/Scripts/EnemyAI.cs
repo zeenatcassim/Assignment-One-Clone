@@ -52,6 +52,7 @@ public class EnemyAI : MonoBehaviour
 
     public Transform referencePoint;
     public float fov_Range;
+    Vector2 savedPosition;
 
     //Distance Checks related to walkpoint algorithm
     public float turnRange;
@@ -73,6 +74,11 @@ public class EnemyAI : MonoBehaviour
     public bool processingDest;
 
     [SerializeField] int walkPattern;
+
+    //Area Scanning (looking in random direction while patrolling)
+    bool scanningArea;
+    float scanTimer = 0;
+    float maxScanTime = 3f;
 
     //Timers
     float knockedDownTimer = 0.0f;
@@ -424,7 +430,7 @@ public class EnemyAI : MonoBehaviour
             //checking how close we are to our walk point
             Vector2 distanceToWalkPoint = walkPoint - transform.position;
 
-            if (distanceToWalkPoint.magnitude < turnRange)
+            if ((distanceToWalkPoint.magnitude < turnRange) && !scanningArea) //and the area is not being scanned
             {
                 //when close enough, find a new point to walk to
                 walkPointSet = false;
@@ -615,6 +621,46 @@ public class EnemyAI : MonoBehaviour
 
     }
 
+
+    public void Pat4ScanPattern()
+    {
+
+        ScanArea();
+
+    }
+
+    public void ScanArea() //Make Our Enemy Look in Several Directions, perhaps three random directions
+    {
+        //We may have to call it repeatedly, Callbacks and/or loops, with timers controlling increments
+
+        int xComp, yComp;
+        xComp = Random.Range(-1, 1);
+        yComp = Random.Range(-1, 1);
+        //scanningArea = true;
+        scanTimer = 0;
+
+        Vector2 scanDirection = new Vector2(xComp, yComp);
+
+
+        Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, scanDirection);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+
+        Invoke(nameof(ScanDelay), maxScanTime);
+
+        walkPoint = transform.position;
+        walkPointSet = true;
+
+    }
+
+
+    public void ScanDelay()
+    {
+        scanningArea = false; //will inform stuff
+        WalkStyle(); // change walk pattern called 
+    }
+
+
+
     /*  public void IdleLook()
       {
           transform.position = Vector3.zero;
@@ -782,8 +828,15 @@ public class EnemyAI : MonoBehaviour
 
     public void WalkStyle()
     {
+        //Exists to change our walk pattern
+    }
+
+    public void AlertedWalkStyleChange()
+    {
 
     }
+
+
 
     private void MeleeAttackPlayer()
     {
@@ -818,6 +871,14 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void LastKnownLocation(Vector2 position)
+    {
+        savedPosition = position;
+    }
+
+
+
+
 
     public void Attacking()
     {
@@ -825,7 +886,18 @@ public class EnemyAI : MonoBehaviour
 
         //SetDestintion(playerCharacter.transform.position);
 
-        targetPosition.position = playerCharacter.transform.position;
+        if (inFieldOfView && playerInSightRange)
+        {
+            targetPosition.position = playerCharacter.transform.position;  // Add control
+            LastKnownLocation(playerCharacter.transform.position); // Nah, I cooked here and with this function
+
+        }
+        else
+        {
+            targetPosition.position = savedPosition;
+        }
+
+
 
         inMeleeRange = Physics2D.OverlapCircle(meleePoint.position, meleeRange, whatIsPlayer);
 
@@ -879,7 +951,7 @@ public class EnemyAI : MonoBehaviour
                             //SetAttackState();
                         }
 
-                        seenPlayerTimer = 0;
+                        seenPlayerTimer = 0; //we reset our seeing player timer everytime we have seen our player
 
 
                     }
@@ -895,12 +967,17 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 inFieldOfView = false;
+
+
             }
 
 
         }
 
     }
+
+
+
 
     private void SetAttackState()
     {
@@ -970,10 +1047,12 @@ public class EnemyAI : MonoBehaviour
 
         alreadyAttacked = false;
 
+        scanningArea = false;
+
         //playerCharacter = GameObject.Find("Player");
 
 
-        InvokeRepeating("GetPath", 0f, 0.5f);
+        InvokeRepeating("GetPath", 0f, 1f);
         startupState = this.enemyState;
 
     }
@@ -984,6 +1063,7 @@ public class EnemyAI : MonoBehaviour
 
         knockedDownTimer += Time.deltaTime;
         seenPlayerTimer += Time.deltaTime;
+        scanTimer += Time.deltaTime;
 
 
         if (enemyState == EnemyState.DOWNED && !finishEngaged)
@@ -997,37 +1077,29 @@ public class EnemyAI : MonoBehaviour
 
         PlayerDetection();
 
-        /* if (Input.GetMouseButtonDown(0))
-         {
-             //Debug.Log("Some Input");
-             InputInformation();
-         }*/
-
-        /*  if (!playerInSightRange && !inFieldOfView)
-          {
-
-              Patroling();
-          }*/
 
         if ((!playerInSightRange || !inFieldOfView) && weaponEquiped)
         {
 
-            if (seenPlayerOnce)
+            if (seenPlayerOnce) //(might be an unnecessary condition)
             {
-                if (seenPlayerTimer > forgetPlayerTime)
+                if (seenPlayerTimer > forgetPlayerTime) //aftert this much time of not seeing the player, go back to patrolling
                 {
-                    enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once
+
+                    enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once 
+
+                    WalkStyle(); // Change of Walk Pattern
                     Patroling();
                 }
 
             }
-            else
-            {
+            /*     else
+                 {
 
-                /* if (playerInSightRange || !inFieldOfView)*/
-                enemyState = startupState;
-                Patroling();
-            }
+                     *//* if (playerInSightRange || !inFieldOfView)*//*
+                     enemyState = startupState;
+                     Patroling();
+                 }*/
 
 
         }
