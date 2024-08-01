@@ -733,7 +733,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1799,7 +1799,7 @@ MonoBehaviour:
   ammoAvailable: 5
   gun: {fileID: 0}
   shoot: {fileID: 0}
-  throwSpeed: 10
+  throwSpeed: 15
   canThrowGun: 0
   rb: {fileID: 0}
 --- !u!114 &1763380400
