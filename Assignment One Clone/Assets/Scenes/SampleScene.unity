@@ -1148,6 +1148,9 @@ GameObject:
   - component: {fileID: 1489908202}
   - component: {fileID: 1489908204}
   - component: {fileID: 1489908203}
+  - component: {fileID: 1489908207}
+  - component: {fileID: 1489908206}
+  - component: {fileID: 1489908205}
   m_Layer: 0
   m_Name: 'placeholder gun '
   m_TagString: GunPickUp
@@ -1199,7 +1202,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.003333807, y: -0.034854487}
@@ -1267,6 +1270,58 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1489908205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489908201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e58a44726d68294dbe14efd5d69f238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmmo: 7
+--- !u!114 &1489908206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489908201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f9794476fe62164490954705005d527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!50 &1489908207
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489908201}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &1545745508
 GameObject:
   m_ObjectHideFlags: 0
@@ -1677,11 +1732,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bdaeab70e5cac045a25d8f306fb4f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickedUpGun: 0
   gunPrefab: {fileID: 2923656917886416717, guid: 498ee2da3377088428fc3222eaf11c9c, type: 3}
-  firePoint: {fileID: 1279278423}
+  pickedUpGun: 0
   ammoAvailable: 5
-  interactionPointRadius: 1.75
+  gun: {fileID: 0}
+  shoot: {fileID: 0}
+  throwForce: 20
+  enemyDetectionRadius: 5
+  canThrowGun: 0
+  rb: {fileID: 0}
 --- !u!114 &1763380400
 MonoBehaviour:
   m_ObjectHideFlags: 0

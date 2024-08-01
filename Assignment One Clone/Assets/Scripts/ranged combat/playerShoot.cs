@@ -34,7 +34,7 @@ public class playerShoot : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && picked.pickedUpGun == true) //picked up a gun
         {
-            Shoot();
+           // Shoot();
         }
         else if(picked.pickedUpGun == false )
         {

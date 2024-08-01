@@ -19,16 +19,5 @@ public class gunAmmo : MonoBehaviour
         
     }
 
-    public void WhileShooting()
-    {
-        if (currentAmmo > 0)
-        {
-            currentAmmo--;
-
-            if (currentAmmo <= 0)
-            {
-                currentAmmo = 0;
-            }
-        }
-    }
+  
 }
