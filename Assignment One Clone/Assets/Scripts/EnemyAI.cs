@@ -261,6 +261,61 @@ public class EnemyAI : MonoBehaviour
     }
 
 
+<<<<<<< Updated upstream
+=======
+    private void DropWeapons()
+    {
+        if (weaponEquiped)
+        {
+           
+            weaponEquiped = false;
+            bool dropPositionFound = SearchDropPosition();
+            if (dropPositionFound)
+            {
+                if (rangedWeapon)
+                {
+                    //instatiate our gun
+                    //give them a position
+                    GameObject weaponDropped = Instantiate(gunPrefab,pickUpDestination.position,transform.rotation);
+                    //if we had to remember bullet amounts, that is possible
+                }
+                else
+                {
+                    //instantiate our melee weapon 
+                    GameObject weaponDropped = Instantiate(meleePrefab, meleePoint.position, transform.rotation);
+                }
+            }
+
+            else
+            {
+                if (rangedWeapon)
+                {//Just instatiate at like default drop position which will be our melee position
+                    GameObject weaponDropped = Instantiate(gunPrefab, meleePoint.position, transform.rotation);
+                }
+                else
+                {
+                    GameObject weaponDropped = Instantiate(meleePrefab, meleePoint.position, transform.rotation);
+                }
+                
+            }
+
+        }
+    }
+
+
+    public bool SearchDropPosition()
+    {
+        float x = Random.Range(-3, +3);
+        float y = Random.Range(-3, +3);
+
+        bool mapPoint = Physics2D.Raycast(new Vector2(transform.position.x + x, transform.position.y + y), Vector2.zero);
+        pickUpDestination.position = new Vector2(transform.position.x + x, transform.position.y + y);
+
+        return mapPoint;
+    }
+
+
+>>>>>>> Stashed changes
     /*  public void PlayerSideNoiseMade()
       {
           RaycastHit2D[] hit = Physics2D.CircleCastAll(this.transform.position, 7f, Vector2.zero, 0, whatIsComrade);

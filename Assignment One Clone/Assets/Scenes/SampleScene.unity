@@ -754,6 +754,12 @@ MonoBehaviour:
   whatIsWeapon:
     serializedVersion: 2
     m_Bits: 1024
+<<<<<<< Updated upstream
+=======
+  whatIsMap:
+    serializedVersion: 2
+    m_Bits: 512
+>>>>>>> Stashed changes
   playerCharacter: {fileID: 1763380393}
   meleePoint: {fileID: 1994505057}
   sightRange: 10
@@ -785,6 +791,14 @@ MonoBehaviour:
   timeBetweenRangedAttack: 2
   startupRangedAttack: 0.5
   enemyGFX: {fileID: 1683366205}
+<<<<<<< Updated upstream
+=======
+  bulletPrefab: {fileID: 1257910826766359848, guid: 43e34f980061a234da4656bccdd03170, type: 3}
+  fireSpeed: 100
+  pickUpDestination: {fileID: 0}
+  meleePrefab: {fileID: 7329814455862060902, guid: 50310e25c141ca04089a0c6b4f8aef36, type: 3}
+  gunPrefab: {fileID: 7329814455862060902, guid: 50310e25c141ca04089a0c6b4f8aef36, type: 3}
+>>>>>>> Stashed changes
 --- !u!61 &898483940
 BoxCollider2D:
   m_ObjectHideFlags: 0
