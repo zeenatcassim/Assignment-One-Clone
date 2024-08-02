@@ -54047,6 +54047,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: animation
+      value: 
+      objectReference: {fileID: 1791612252}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: fireSpeed
       value: 100
       objectReference: {fileID: 0}

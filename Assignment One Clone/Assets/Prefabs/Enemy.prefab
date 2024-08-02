@@ -192,7 +192,7 @@ MonoBehaviour:
     m_Bits: 1024
   whatIsMap:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   playerCharacter: {fileID: 0}
   meleePoint: {fileID: 8675396071803620000}
   sightRange: 10
@@ -224,11 +224,12 @@ MonoBehaviour:
   timeBetweenRangedAttack: 2
   startupRangedAttack: 0.5
   enemyGFX: {fileID: 4141887469060274346}
-  bulletPrefab: {fileID: 0}
-  fireSpeed: 0
+  bulletPrefab: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
+  fireSpeed: 100
   pickUpDestination: {fileID: 0}
-  meleePrefab: {fileID: 0}
-  gunPrefab: {fileID: 0}
+  meleePrefab: {fileID: 7187373740964774847, guid: 67d856674f8c7c14a885cd233f4193c5, type: 3}
+  gunPrefab: {fileID: 7187373740964774847, guid: 42c206fe551839f43948db93ff5fb5f9, type: 3}
+  animation: {fileID: 0}
 --- !u!114 &9066884832803127185
 MonoBehaviour:
   m_ObjectHideFlags: 0

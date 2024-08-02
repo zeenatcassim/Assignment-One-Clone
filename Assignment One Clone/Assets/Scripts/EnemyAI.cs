@@ -124,6 +124,9 @@ public class EnemyAI : MonoBehaviour
     public GameObject meleePrefab;
     public GameObject gunPrefab;
 
+    //Animator 
+    public Animator animation; 
+
 
     //Vector2 dropPosition;
     //public Transform defaultDropPosition; will use melee position instead
@@ -198,10 +201,13 @@ public class EnemyAI : MonoBehaviour
         if (path == null)
         {
             // With no path, we are stationary
+            animation.SetBool("isWalking", false);
             return;
+
         }
 
-
+        //animate movement to targets
+        animation.SetBool("isWalking", true);
 
         if (currentWayPoint + 1 >= path.vectorPath.Count)
         {
@@ -944,6 +950,8 @@ public class EnemyAI : MonoBehaviour
     {
         if (!alreadyAttacked)
         {
+            StartCoroutine(AtkAnim()); // call the coroutine for our animation
+
 
             //Fire a projectile at the player, projectile will handle player death
             GameObject firedBulled = Instantiate(bulletPrefab, meleePoint.position, meleePoint.rotation);
@@ -964,6 +972,17 @@ public class EnemyAI : MonoBehaviour
             Invoke(nameof(ResetAttack), timeBetweenRangedAttack);
         }
     }
+
+
+
+    private IEnumerator AtkAnim()
+    {
+        //call our punch
+        animation.SetBool("punch",true);
+        yield return new WaitForSeconds(.5f);
+        animation.SetBool("punch", false);
+    }
+
 
     private void LastKnownLocation(Vector2 position)
     {
@@ -1324,8 +1343,21 @@ public class EnemyAI : MonoBehaviour
 
         if (!weaponEquiped)
         {
+
             SetUnarmedState();
             FindWeapon();
+        }
+
+        if (weaponEquiped)
+        {
+            if (rangedWeapon)
+            {
+                animation.SetBool("hasGun",true);
+            }
+            else
+            {
+                animation.SetBool("hasMelee", true);
+            }
         }
 
     }
