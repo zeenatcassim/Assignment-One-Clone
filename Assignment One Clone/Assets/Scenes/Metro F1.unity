@@ -390,6 +390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 222292643}
+  - component: {fileID: 222292644}
   m_Layer: 0
   m_Name: Door1 (1)
   m_TagString: Untagged
@@ -414,6 +415,20 @@ Transform:
   - {fileID: 1361671412}
   m_Father: {fileID: 1205262677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &222292644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222292642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b1731e47ed20ef4baa0d0afd823794a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSwingTime: 0.55
+  playerSwungDoor: 0
 --- !u!1 &439468470
 GameObject:
   m_ObjectHideFlags: 0
@@ -18301,6 +18316,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1048241042}
+  - component: {fileID: 1048241043}
   m_Layer: 0
   m_Name: Door1
   m_TagString: Untagged
@@ -18325,6 +18341,20 @@ Transform:
   - {fileID: 1878651946}
   m_Father: {fileID: 1205262677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1048241043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048241041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b1731e47ed20ef4baa0d0afd823794a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSwingTime: 0.55
+  playerSwungDoor: 0
 --- !u!1 &1090329786
 GameObject:
   m_ObjectHideFlags: 0
@@ -18668,6 +18698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1123867818}
+  - component: {fileID: 1123867819}
   m_Layer: 0
   m_Name: Door1 (2)
   m_TagString: Untagged
@@ -18692,6 +18723,20 @@ Transform:
   - {fileID: 1097603394}
   m_Father: {fileID: 1205262677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &1123867819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123867817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b1731e47ed20ef4baa0d0afd823794a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSwingTime: 0.55
+  playerSwungDoor: 0
 --- !u!1 &1139265904
 GameObject:
   m_ObjectHideFlags: 0
@@ -54307,12 +54352,16 @@ PrefabInstance:
       objectReference: {fileID: 7187373740964774847, guid: 42c206fe551839f43948db93ff5fb5f9, type: 3}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: enemyState
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: meleePrefab
       value: 
       objectReference: {fileID: 7187373740964774847, guid: 67d856674f8c7c14a885cd233f4193c5, type: 3}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: walkPattern
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: bulletPrefab
       value: 
