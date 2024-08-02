@@ -6,6 +6,7 @@ using TMPro;
 public class TextEffect : MonoBehaviour
 {
     [SerializeField] TMP_Text text;
+    [SerializeField] float speed = 2.5f;
 
 
     // Start is called before the first frame update
@@ -31,7 +32,7 @@ public class TextEffect : MonoBehaviour
             for (int j = 0; j < 4; j++)
             {
                 var orig = charVertices[charVar.vertexIndex + j];
-                charVertices[charVar.vertexIndex + j] = orig + new Vector3(0, Mathf.Sin(Time.time * 2.5f + orig.x * (0.01f)) * 5f , 0);
+                charVertices[charVar.vertexIndex + j] = orig + new Vector3(0, Mathf.Sin(Time.time * speed + orig.x * (0.01f)) * 5f , 0);
             }
         }
 

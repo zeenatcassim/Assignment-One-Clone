@@ -3491,6 +3491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1082267356}
   - component: {fileID: 1082267355}
+  - component: {fileID: 1082267357}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -3519,6 +3520,7 @@ MonoBehaviour:
   - {fileID: 934887266}
   BackGroundMusic: {fileID: 1260171749}
   AudioState: {fileID: 11400000, guid: 44fc46ed1aba454449f7b4d7bb41f6ce, type: 2}
+  scoreDisplay: {fileID: 1082267357}
 --- !u!4 &1082267356
 Transform:
   m_ObjectHideFlags: 0
@@ -3534,6 +3536,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1082267357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082267354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f315105082ec8cc4b9f2b744f35a66f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 8386151372475591434, guid: 2f86eaf7f58ce6a4fbb88dd05cf17cc6, type: 3}
 --- !u!1 &1097603393
 GameObject:
   m_ObjectHideFlags: 0
@@ -19166,6 +19181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1885453014}
+  speed: 2.5
 --- !u!114 &1885453014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19385,6 +19401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 2092609835}
+  speed: 2.5
 --- !u!114 &2092609835
 MonoBehaviour:
   m_ObjectHideFlags: 0
