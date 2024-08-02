@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
     [Header("Weapon Spawning")]
     [SerializeField] GameObject weaponPrefab;
     [SerializeField] List<WeaponData> weaponData = new List<WeaponData>();
     [SerializeField] List<Transform> weaponSpawnPoints = new List<Transform>();
 
+    [Header("Audio")]
+    [SerializeField] AudioSource BackGroundMusic;
+    [SerializeField] AudioState AudioState;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,9 @@ public class GameManager : MonoBehaviour
             newWeapon.GetComponent<WeaponController>().type = weaponData[i].type;
             newWeapon.GetComponent<SpriteRenderer>().sprite = weaponData[i].sprite;
         }
+
+        if (AudioState.state)
+            BackGroundMusic.Play();
     }
 
     // Update is called once per frame
