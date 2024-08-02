@@ -881,7 +881,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!alreadyAttacked)
         {
-            StartCoroutine(AtkAnim()); // call the coroutine for our animation
+            
 
             inMeleeRange = Physics2D.OverlapCircle(meleePoint.position, meleeRange, whatIsPlayer);
             if (inMeleeRange)
@@ -909,7 +909,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!alreadyAttacked)
         {
-            StartCoroutine(AtkAnim()); // call the coroutine for our animation
+           
 
 
             //Fire a projectile at the player, projectile will handle player death
@@ -975,6 +975,7 @@ public class EnemyAI : MonoBehaviour
 
         if (inMeleeRange && !rangedWeapon) //in melee range with a melee weapon
         {
+            StartCoroutine(AtkAnim()); // call the coroutine for our animation
             //Perform Melee attacks
             Invoke(nameof(MeleeAttackPlayer), startupMeleeAttack);
 
@@ -982,6 +983,7 @@ public class EnemyAI : MonoBehaviour
 
         if (rangedWeapon && playerInSightRange)
         {
+            StartCoroutine(AtkAnim()); // call the coroutine for our animation
             Invoke(nameof(RangedAttackPlayer), startupRangedAttack);
         }
 

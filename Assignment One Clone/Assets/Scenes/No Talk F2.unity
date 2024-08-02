@@ -10185,7 +10185,7 @@ MonoBehaviour:
   scoreDisplay: {fileID: 766934041}
   overallScore: 0
   text: {fileID: 824223230}
-  gameData: {fileID: 0}
+  gameData: {fileID: 11400000, guid: a85beefc45801554f912c66e9679dcf7, type: 2}
 --- !u!4 &766934040
 Transform:
   m_ObjectHideFlags: 0
@@ -38974,6 +38974,7 @@ MonoBehaviour:
   curenemyDown: 0
   pauseScreen: {fileID: 1729178587}
   gameOverScreen: {fileID: 360468656}
+  gameManager: {fileID: 0}
   enemyObj: {fileID: 0}
 --- !u!50 &1763380396
 Rigidbody2D:
