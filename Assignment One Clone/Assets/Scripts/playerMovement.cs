@@ -46,6 +46,11 @@ public class playerMovement : MonoBehaviour
         gameOverScreen.SetActive(false);
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     public void SpawnBlood(Vector2 position)
     {
         for (int i = 0; i < splatterCount; i++)
