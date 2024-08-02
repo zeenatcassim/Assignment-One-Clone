@@ -153,6 +153,7 @@ public class playerMovement : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("Player Would have died/Respawned");
+        isDead = true;
     }
 
     private void FixedUpdate()

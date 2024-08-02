@@ -126,7 +126,9 @@ public class EnemyAI : MonoBehaviour
 
     //Animator 
     public Animator enemyAnimate;
+    
 
+    public bool isDowned;
 
     //Vector2 dropPosition;
     //public Transform defaultDropPosition; will use melee position instead
@@ -270,19 +272,14 @@ public class EnemyAI : MonoBehaviour
 
     public void TakeAttack()
     {
-        //Determine if this game object was killed or no
-        //if not killed
-        //enemyState = EnemyState.DOWNED;
-        //else enemyState = EnemyState.DEAD;
-
-        //enemyState = EnemyState.HURT;
-
-        //int damage, if damage > etc.
-
+       
+        knockedDownTimer = 0;
         Debug.Log("Got Hit");
         enemyState = EnemyState.DOWNED;
 
         enemySprite.color = enemyKnockedColor;
+
+        isDowned = true;
 
         DropWeapons();
 
@@ -344,19 +341,6 @@ public class EnemyAI : MonoBehaviour
     }
 
 
-    /*  public void PlayerSideNoiseMade()
-      {
-          RaycastHit2D[] hit = Physics2D.CircleCastAll(this.transform.position, 7f, Vector2.zero, 0, whatIsComrade);
-          for (int i = 0; i < hit.Length; i++)
-          {
-              if (hit[i].collider.CompareTag("Enemy"))
-              {
-                  GameObject gameObj = hit[i].collider.gameObject;
-                  gameObj.GetComponent<EnemyAI>().GoToNoiseLocation(this.transform.position);
-              }
-          }
-      }
-  */
 
     public void GoToNoiseLocation(Vector2 noiseLocation)
     {
@@ -368,48 +352,7 @@ public class EnemyAI : MonoBehaviour
     }
 
 
-    public void PlayerSideEngageFinisher()
-    {
-
-        if (Input.GetKeyDown(KeyCode.Space)) // lock out the function entry or something
-        {
-            RaycastHit2D hit = Physics2D.CircleCast(transform.position, 3f, Vector2.zero, 0, whatIsComrade);
-            {
-                if (hit.collider.CompareTag("Enemy"))
-                {
-                    GameObject enemyObj = hit.collider.gameObject;
-
-                    bool finisherEngaged = enemyObj.GetComponent<EnemyAI>().TakeFinisher();
-                    if (finisherEngaged)
-                    {
-                        //Call our function that will lock other controls until our enemy is dead.
-
-                    }
-                    else
-                    {
-
-                    }
-                }
-            }
-            //enemy
-        }
-
-        /*if(bashCounter < bashesRequired)
-          {
-          some things are true
-
-
-          }
-          else if (bashCounter > basehesRequired)
-          {
-           things be false, call the TakeFinisher Function, avoid null reference error
-            
-
-          }
-
-           call a fucntion to reset counter and a nullify a game Object target. 
-         */
-    }
+   
 
 
     public bool TakeFinisher()
@@ -425,6 +368,7 @@ public class EnemyAI : MonoBehaviour
             finishEngaged = true;
             return finishEngaged;
         }
+
         else
         {
             Debug.Log("Enemy Downed");
@@ -465,7 +409,9 @@ public class EnemyAI : MonoBehaviour
 
     public void OnYourFeet()
     {
+        isDowned = false;
         enemyState = EnemyState.PATROL;
+        enemyAnimate.SetBool("isDowned", false);
     }
 
     public void Patroling()
@@ -923,6 +869,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!alreadyAttacked)
         {
+            StartCoroutine(AtkAnim()); // call the coroutine for our animation
 
             inMeleeRange = Physics2D.OverlapCircle(meleePoint.position, meleeRange, whatIsPlayer);
             if (inMeleeRange)
@@ -1265,6 +1212,8 @@ public class EnemyAI : MonoBehaviour
 
         scanningArea = false;
 
+        isDowned = false;
+
         //playerCharacter = GameObject.Find("Player");
 
         if (pickUpDestination == null)
@@ -1291,9 +1240,11 @@ public class EnemyAI : MonoBehaviour
         scanTimer += Time.deltaTime;
 
 
-        if (enemyState == EnemyState.DOWNED)
+        if (isDowned)
         {
-            rb.velocity = Vector2.zero;
+            //enemyState = EnemyState.DOWNED;
+
+            //rb.velocity = Vector2.zero;
             if (!finishEngaged)
             {
                 if (knockedDownTimer > downedTime)
@@ -1314,8 +1265,12 @@ public class EnemyAI : MonoBehaviour
         {
 
 
+            if(isDowned == false)
+            {
+                PlayerDetection();
 
-            PlayerDetection();
+            }
+           
 
 
             if ((!playerInSightRange || !inFieldOfView) && weaponEquiped)
@@ -1340,21 +1295,7 @@ public class EnemyAI : MonoBehaviour
                 }
 
 
-                /*     else
-                     {
-
-                         *//* if (playerInSightRange || !inFieldOfView)*//*
-                         enemyState = startupState;
-                         Patroling();
-                     }*/
-
-
             }
-
-            /*   if (playerInSightRange && inFieldOfView)
-               {
-                   Attacking();
-               }*/
 
             if (enemyState == EnemyState.ATTACK)
             {
@@ -1362,29 +1303,32 @@ public class EnemyAI : MonoBehaviour
             }
 
 
-            if (!weaponEquiped)
+         /*   if (!weaponEquiped)
             {
 
                 SetUnarmedState();
                 FindWeapon();
-            }
+            }*/
 
-            if (weaponEquiped)
-            {
-                if (rangedWeapon)
-                {
-                    enemyAnimate.SetBool("hasGun", true);
-                }
-                else
-                {
-                    enemyAnimate.SetBool("hasMelee", true);
-                }
-            }
+           
         }
         /*if(enemyState == EnemyState.IDLE)
         {
             animation.SetBool("isWalking", false);
         }*/
+
+        if (weaponEquiped)
+        {
+            if (rangedWeapon)
+            {
+                enemyAnimate.SetBool("hasGun", true);
+            }
+            else
+            {
+                enemyAnimate.SetBool("hasMelee", true);
+            }
+        }
+
 
         if (rb.velocity.magnitude > 0.05)
         {
@@ -1400,6 +1344,7 @@ public class EnemyAI : MonoBehaviour
             //Do nothing
         }
 
+
     }
 
 
@@ -1409,6 +1354,9 @@ public class EnemyAI : MonoBehaviour
 
         if(enemyState == EnemyState.DOWNED)
         {
+            path = null;
+
+            rb.velocity = Vector2.zero;
             return;
         }
         else
