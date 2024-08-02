@@ -54193,9 +54193,25 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: fireSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: gunPrefab
+      value: 
+      objectReference: {fileID: 7187373740964774847, guid: 42c206fe551839f43948db93ff5fb5f9, type: 3}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: enemyState
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: meleePrefab
+      value: 
+      objectReference: {fileID: 7187373740964774847, guid: 67d856674f8c7c14a885cd233f4193c5, type: 3}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
@@ -54204,6 +54220,10 @@ PrefabInstance:
       propertyPath: playerCharacter
       value: 
       objectReference: {fileID: 1763380393}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: whatIsMap.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 8333993638147035705, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: m_Sprite
       value: 
