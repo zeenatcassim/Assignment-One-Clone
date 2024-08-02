@@ -113,6 +113,10 @@ public class pickUpGun : MonoBehaviour
             gunInstance.transform.localScale = new Vector3(0.17f, 0.07f, 0);
             gunInstance.transform.rotation = Quaternion.identity;
 
+
+            SpriteRenderer spriteRenderer = gunInstance.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.clear;
+
             //for enemy to know state of gun
             equipedGun = gunInstance.GetComponent<gunTrigger>();
             equipedGun.EquipedGun();
@@ -158,6 +162,7 @@ public class pickUpGun : MonoBehaviour
         else
         {
             SpriteRenderer spriteRenderer = gunInstance.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = Color.white;
 
             if (spriteRenderer != null)
             {
