@@ -54396,7 +54396,7 @@ PrefabInstance:
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
-      objectReference: {fileID: 1784011505}
+      objectReference: {fileID: 1847945838}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: playerCharacter
       value: 
@@ -54447,6 +54447,11 @@ PrefabInstance:
 --- !u!4 &1847945837 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1648319760406290267, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+  m_PrefabInstance: {fileID: 1847945836}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1847945838 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4866050391622851281, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
   m_PrefabInstance: {fileID: 1847945836}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1878651945
@@ -55006,7 +55011,7 @@ PrefabInstance:
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
-      objectReference: {fileID: 1784011505}
+      objectReference: {fileID: 2091758175}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: playerCharacter
       value: 
@@ -55085,6 +55090,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &2091758175 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4866050391622851281, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+  m_PrefabInstance: {fileID: 2091758171}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
