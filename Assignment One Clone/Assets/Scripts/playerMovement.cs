@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerMovement : MonoBehaviour
 {
@@ -24,6 +25,10 @@ public class playerMovement : MonoBehaviour
     public GameObject[] bloodPrefabs; // Array to hold different blood splatter prefabs
     public int splatterCount = 5;
     public float spread = 1f;
+
+    public bool isDead;
+
+    public bool curenemyDown = false;
 
     void Start()
     {
@@ -61,34 +66,36 @@ public class playerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            StartCoroutine(PunchAnim());
-        }
-
-        if (isDown)
-        {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            if (curenemyDown && isDown)
             {
                 bashCounter++;
-
                 SpawnBlood(transform.position);
-
-                if (bashCounter < 3)
-                {
-                    // Allow left click to go through
-                }
 
                 if (bashCounter == 3)
                 {
                     enemyObj.GetComponent<EnemyAI>().EnemyDeath();
                     Debug.Log("Enemy finished");
-                    bashCounter = 0;
-                    isDown = false;
-                    moveSpeed = originalMoveSpeed; // Unlock player movement
+                    ResetFinisherState();
                 }
+            }
+            else
+            {
+                StartCoroutine(PunchAnim());
             }
         }
 
-        PlayerSideEngageFinisher();
+        if (curenemyDown && !isDown)
+        {
+            PlayerSideEngageFinisher();
+        }
+
+        if (isDead)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene("No Talk F2");
+            }
+        }
     }
 
     private IEnumerator PunchAnim()
@@ -104,7 +111,7 @@ public class playerMovement : MonoBehaviour
 
     public void PlayerSideEngageFinisher()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // lock out the function entry or something
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Space");
 
@@ -117,8 +124,6 @@ public class playerMovement : MonoBehaviour
                 if (finisherEngaged)
                 {
                     Debug.Log("Enemy Finishing");
-                    //enemyObj.transform.Find("EnemyCharacterGFX").GetComponent<SpriteRenderer>().color = Color.red;
-
                     isDown = true;
 
                     // Set the player's position to the enemy's position
@@ -126,9 +131,23 @@ public class playerMovement : MonoBehaviour
 
                     // Lock player movement
                     moveSpeed = 0;
+
+                    enemyObj.GetComponent<EnemyAI>().enabled = false;
+                    enemyObj.transform.Find("EnemyCharacterGFX").GetComponent<Animator>().SetBool("isWalking", false);
+                    enemyObj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    enemyObj.transform.Find("EnemyCharacterGFX").GetComponent<Animator>().SetBool("isDowned", true);
                 }
             }
         }
+    }
+
+    public void ResetFinisherState()
+    {
+        bashCounter = 0;
+        isDown = false;
+        moveSpeed = originalMoveSpeed; // Unlock player movement
+        curenemyDown = false;
+        enemyObj.GetComponent<BoxCollider2D>().enabled = false;
     }
 
     public void GameOver()
