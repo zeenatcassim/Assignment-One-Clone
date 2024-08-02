@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class projectile : MonoBehaviour
 {
+    public EnemyAI enemy;
     // Start is called before the first frame update
     void Start()
     {
-        
+        enemy = FindAnyObjectByType<EnemyAI>();
     }
 
     // Update is called once per frame
@@ -21,6 +22,7 @@ public class projectile : MonoBehaviour
         if (collision.collider.CompareTag("enemyAI"))
         {
             Destroy(gameObject);
+            enemy.EnemyDeath();
         }
 
         if (collision.collider.CompareTag("levelProps"))

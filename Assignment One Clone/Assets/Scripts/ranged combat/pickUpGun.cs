@@ -49,7 +49,8 @@ public class pickUpGun : MonoBehaviour
         {
             if (canPickUpGun) //right mouse button
             {  
-                gun.maxAmmo = ammoAvailable;
+               // gun.maxAmmo = 
+                ammoAvailable = 24;
                 PickUpGun();
 
 
@@ -108,9 +109,9 @@ public class pickUpGun : MonoBehaviour
             gunInstance = Instantiate(gunPrefab, transform);
 
             //what needed to initially put in:
-            gunInstance.transform.localPosition = new Vector3(-0.01f, 0.11f, 0);
+            gunInstance.transform.localPosition = new Vector3(0, 0.05800009f, 0);
             gunInstance.transform.localScale = new Vector3(0.17f, 0.07f, 0);
-            gunInstance.transform.localRotation = Quaternion.identity;
+            gunInstance.transform.rotation = Quaternion.identity;
 
             //for enemy to know state of gun
             equipedGun = gunInstance.GetComponent<gunTrigger>();
@@ -164,7 +165,7 @@ public class pickUpGun : MonoBehaviour
 
               //  gunInstance.transform.position = mousePosition;
 
-                StartCoroutine(MoveTowardsCursor(gunInstance.transform, mousePosition, 2f));
+                StartCoroutine(MoveTowardsCursor(gunInstance.transform, mousePosition, 0.25f));
 
                 //Let enemy know they can probably pick up this gun now
                 equipedGun.UnEquipGun();
@@ -243,7 +244,7 @@ public class pickUpGun : MonoBehaviour
 
             if (objTransform != null)
             { objTransform.position = targetPosition;
-                Destroy(objTransform.gameObject, 1f);
+                Destroy(objTransform.gameObject, 0.25f);
             }
            
          
