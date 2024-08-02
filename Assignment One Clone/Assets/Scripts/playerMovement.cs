@@ -30,9 +30,15 @@ public class playerMovement : MonoBehaviour
 
     public bool curenemyDown = false;
 
+    public GameObject pauseScreen;
+    public GameObject gameOverScreen;
+
+    private bool isPaused = false;
+
     void Start()
     {
         originalMoveSpeed = moveSpeed; // Store the original move speed
+        pauseScreen.SetActive(false); // Ensure pause screen is initially hidden
     }
 
     public void SpawnBlood(Vector2 position)
@@ -48,6 +54,13 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
+
+        if (isPaused) return; // Do nothing if the game is paused
+
         if (!isDown)
         {
             movement.x = Input.GetAxisRaw("Horizontal");
@@ -158,6 +171,8 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isPaused) return; // Do nothing if the game is paused
+
         // Move the player
         rb.MovePosition(rb.position + movement * originalMoveSpeed * Time.deltaTime);
 
@@ -168,5 +183,12 @@ public class playerMovement : MonoBehaviour
         // Adjust this offset based on your sprite's default orientation
         float rotationOffset = -360;  // Experiment with this value
         rb.rotation = angle + rotationOffset;
+    }
+
+    private void TogglePause()
+    {
+        isPaused = !isPaused;
+        pauseScreen.SetActive(isPaused);
+        Time.timeScale = isPaused ? 0f : 1f;
     }
 }
