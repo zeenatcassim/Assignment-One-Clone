@@ -1291,81 +1291,96 @@ public class EnemyAI : MonoBehaviour
         scanTimer += Time.deltaTime;
 
 
-        if (enemyState == EnemyState.DOWNED && !finishEngaged)
+        if (enemyState == EnemyState.DOWNED)
         {
-            if (knockedDownTimer > downedTime)
+            rb.velocity = Vector2.zero;
+            if (!finishEngaged)
             {
-                OnYourFeet();
+                if (knockedDownTimer > downedTime)
+                {
+                    OnYourFeet();
 
+                }
             }
         }
 
-        PlayerDetection();
 
+        /*if (enemyState == EnemyState.DOWNED && !finishEngaged)
+        {
+           
+        }*/
 
-        if ((!playerInSightRange || !inFieldOfView) && weaponEquiped)
+        else
         {
 
 
-            if (seenPlayerTimer > forgetPlayerTime) //aftert this much time of not seeing the player, go back to patrolling
+
+            PlayerDetection();
+
+
+            if ((!playerInSightRange || !inFieldOfView) && weaponEquiped)
             {
-                if (enemyState != EnemyState.IDLE)
+
+
+                if (seenPlayerTimer > forgetPlayerTime) //aftert this much time of not seeing the player, go back to patrolling
                 {
-                    enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once 
+                    if (enemyState != EnemyState.IDLE)
+                    {
+                        enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once 
+                    }
+
+
+                    if (seenPlayerOnce)
+                    {
+                        WalkStyle(); // Change of Walk Pattern, we have to call it only once so we only change walk style when this is called
+                        seenPlayerOnce = false; //reset so that we can reactivate it when we see the player again and change our walk pattern again
+                    }
+
+                    Patroling();
                 }
 
 
-                if (seenPlayerOnce)
+                /*     else
+                     {
+
+                         *//* if (playerInSightRange || !inFieldOfView)*//*
+                         enemyState = startupState;
+                         Patroling();
+                     }*/
+
+
+            }
+
+            /*   if (playerInSightRange && inFieldOfView)
+               {
+                   Attacking();
+               }*/
+
+            if (enemyState == EnemyState.ATTACK)
+            {
+                Attacking();
+            }
+
+
+            if (!weaponEquiped)
+            {
+
+                SetUnarmedState();
+                FindWeapon();
+            }
+
+            if (weaponEquiped)
+            {
+                if (rangedWeapon)
                 {
-                    WalkStyle(); // Change of Walk Pattern, we have to call it only once so we only change walk style when this is called
-                    seenPlayerOnce = false; //reset so that we can reactivate it when we see the player again and change our walk pattern again
+                    enemyAnimate.SetBool("hasGun", true);
                 }
-
-                Patroling();
-            }
-
-
-            /*     else
-                 {
-
-                     *//* if (playerInSightRange || !inFieldOfView)*//*
-                     enemyState = startupState;
-                     Patroling();
-                 }*/
-
-
-        }
-
-        /*   if (playerInSightRange && inFieldOfView)
-           {
-               Attacking();
-           }*/
-
-        if (enemyState == EnemyState.ATTACK)
-        {
-            Attacking();
-        }
-
-
-        if (!weaponEquiped)
-        {
-
-            SetUnarmedState();
-            FindWeapon();
-        }
-
-        if (weaponEquiped)
-        {
-            if (rangedWeapon)
-            {
-                enemyAnimate.SetBool("hasGun", true);
-            }
-            else
-            {
-                enemyAnimate.SetBool("hasMelee", true);
+                else
+                {
+                    enemyAnimate.SetBool("hasMelee", true);
+                }
             }
         }
-
         /*if(enemyState == EnemyState.IDLE)
         {
             animation.SetBool("isWalking", false);
@@ -1380,6 +1395,11 @@ public class EnemyAI : MonoBehaviour
             enemyAnimate.SetBool("isWalking", false);
         }
 
+        if (enemyState == EnemyState.DEAD)
+        {
+            //Do nothing
+        }
+
     }
 
 
@@ -1387,8 +1407,15 @@ public class EnemyAI : MonoBehaviour
     {
         //
 
-
-        MoveToTarget();
+        if(enemyState == EnemyState.DOWNED)
+        {
+            return;
+        }
+        else
+        {
+            MoveToTarget();
+        }
+       
 
 
     }
