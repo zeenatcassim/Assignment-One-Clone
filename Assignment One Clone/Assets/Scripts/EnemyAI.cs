@@ -290,7 +290,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (weaponEquiped)
         {
-           
+
             weaponEquiped = false;
             bool dropPositionFound = SearchDropPosition();
             if (dropPositionFound)
@@ -299,16 +299,27 @@ public class EnemyAI : MonoBehaviour
                 {
                     //instatiate our gun
                     //give them a position
+                    GameObject weaponDropped = Instantiate(gunPrefab, pickUpDestination.position, transform.rotation);
+                    //if we had to remember bullet amounts, that is possible
                 }
                 else
                 {
                     //instantiate our melee weapon 
+                    GameObject weaponDropped = Instantiate(meleePrefab, meleePoint.position, transform.rotation);
                 }
             }
 
             else
             {
-                //Just instatiate at like default drop position which will be our melee position
+                if (rangedWeapon)
+                {//Just instatiate at like default drop position which will be our melee position
+                    GameObject weaponDropped = Instantiate(gunPrefab, meleePoint.position, transform.rotation);
+                }
+                else
+                {
+                    GameObject weaponDropped = Instantiate(meleePrefab, meleePoint.position, transform.rotation);
+                }
+
             }
 
         }
@@ -907,7 +918,7 @@ public class EnemyAI : MonoBehaviour
         if (!alreadyAttacked)
         {
 
-            inMeleeRange = Physics2D.OverlapCircle(meleePoint.position,meleeRange,whatIsPlayer);
+            inMeleeRange = Physics2D.OverlapCircle(meleePoint.position, meleeRange, whatIsPlayer);
             if (inMeleeRange)
             {
                 //Game over for our player character
@@ -936,14 +947,14 @@ public class EnemyAI : MonoBehaviour
 
             //Fire a projectile at the player, projectile will handle player death
             GameObject firedBulled = Instantiate(bulletPrefab, meleePoint.position, meleePoint.rotation);
-      
+
             Rigidbody2D rb = firedBulled.GetComponent<Rigidbody2D>();
 
             rb.AddForce(meleePoint.up * fireSpeed, ForceMode2D.Impulse);
 
             RaycastHit2D hitScan = Physics2D.Raycast(meleePoint.position, meleePoint.up, sightRange, whatIsPlayer);
 
-            if(hitScan.collider.CompareTag("Player"))
+            if (hitScan.collider.CompareTag("Player"))
             {
                 //Game over for our player character
                 playerCharacter.GetComponent<playerMovement>().GameOver();
@@ -1084,15 +1095,15 @@ public class EnemyAI : MonoBehaviour
     private void FindWeapon() // Mix of Patrol && Others
     {
         isWeaponAround = Physics2D.OverlapCircle(transform.position, sightRange / 2, whatIsWeapon);
-       
+
 
         if (isWeaponAround)
         {
             RaycastHit2D[] hit = Physics2D.CircleCastAll(transform.position, sightRange / 2, Vector2.zero, 0, whatIsWeapon);
             //Find out if its in an equipable state. Walk towards it and pick it up
-            for(int i = 0; i < hit.Length; i++)
+            for (int i = 0; i < hit.Length; i++)
             {
-                if(hit[i].collider != null)
+                if (hit[i].collider != null)
                 {
                     GameObject getWeapon = hit[i].collider.gameObject;
                     //getWeapon.GetComponent<>  // see if the weapon is not in the players hands,
@@ -1109,24 +1120,24 @@ public class EnemyAI : MonoBehaviour
                     }
                 }
             }
-          
-           
+
+
 
         }
 
         if (walkToPickUp)
         {
             Vector2 distanceToPickUp = pickUpDestination.position - transform.position;
-            if(distanceToPickUp.magnitude < 2f)
+            if (distanceToPickUp.magnitude < 2f)
             {
                 //Pickup our weapon we targeted 
-                RaycastHit2D[] hit = Physics2D.CircleCastAll(transform.position, 2f, Vector2.zero,0,whatIsWeapon);
+                RaycastHit2D[] hit = Physics2D.CircleCastAll(transform.position, 2f, Vector2.zero, 0, whatIsWeapon);
 
-                for(int j = 0; j < hit.Length; j++)
+                for (int j = 0; j < hit.Length; j++)
                 {
-                    if(hit [j].collider != null)
+                    if (hit[j].collider != null)
                     {
-                        if(gunDetected == hit [j].collider.gameObject)
+                        if (gunDetected == hit[j].collider.gameObject)
                         {
                             //Pick it up 
                             weaponEquiped = true;
@@ -1141,21 +1152,21 @@ public class EnemyAI : MonoBehaviour
 
 
                             walkToPickUp = false;
-                            
+
                         }
                     }
                 }
-               
+
             }
 
-                //checking how close we are to our walk point
-             /*   Vector2 distanceToWalkPoint = walkPoint - transform.position;
+            //checking how close we are to our walk point
+            /*   Vector2 distanceToWalkPoint = walkPoint - transform.position;
 
-            if ((distanceToWalkPoint.magnitude < turnRange) && !scanningArea) //and the area is not being scanned
-            {
-                //when close enough, find a new point to walk to
-                walkPointSet = false;
-            }*/
+           if ((distanceToWalkPoint.magnitude < turnRange) && !scanningArea) //and the area is not being scanned
+           {
+               //when close enough, find a new point to walk to
+               walkPointSet = false;
+           }*/
         }
         /* else if()            
          {
@@ -1166,7 +1177,7 @@ public class EnemyAI : MonoBehaviour
         else
         {
             //Do some basic patrolling while unarmed
-            walkToPickUp=false;
+            walkToPickUp = false;
 
 
             //if we have nowhere to walk to, and have to walk, find walk point
@@ -1237,14 +1248,14 @@ public class EnemyAI : MonoBehaviour
 
         //playerCharacter = GameObject.Find("Player");
 
-        if(pickUpDestination == null)
+        if (pickUpDestination == null)
         {
             pickUpDestination = targetPosition;
         }
-       
-        
 
-        InvokeRepeating("GetPath", 0f, 1f);
+
+
+        InvokeRepeating("GetPath", 0f, 0.5f);
         startupState = this.enemyState;
 
     }
@@ -1273,22 +1284,22 @@ public class EnemyAI : MonoBehaviour
         if ((!playerInSightRange || !inFieldOfView) && weaponEquiped)
         {
 
-           
-                if (seenPlayerTimer > forgetPlayerTime) //aftert this much time of not seeing the player, go back to patrolling
-                {
 
-                    enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once 
+            if (seenPlayerTimer > forgetPlayerTime) //aftert this much time of not seeing the player, go back to patrolling
+            {
+
+                enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once 
 
                 if (seenPlayerOnce)
                 {
                     WalkStyle(); // Change of Walk Pattern, we have to call it only once so we only change walk style when this is called
-                    seenPlayerOnce=false; //reset so that we can reactivate it when we see the player again and change our walk pattern again
-                }
-                  
-                    Patroling();
+                    seenPlayerOnce = false; //reset so that we can reactivate it when we see the player again and change our walk pattern again
                 }
 
-            
+                Patroling();
+            }
+
+
             /*     else
                  {
 
