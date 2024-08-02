@@ -867,7 +867,24 @@ public class EnemyAI : MonoBehaviour
         {
 
             //Fire a projectile at the player, projectile will handle player death
+<<<<<<< Updated upstream
 
+=======
+            GameObject firedBulled = Instantiate(bulletPrefab, meleePoint.position, meleePoint.rotation);
+
+            Rigidbody2D rb = firedBulled.GetComponent<Rigidbody2D>();
+
+            rb.AddForce(meleePoint.up * fireSpeed, ForceMode2D.Impulse);
+
+           /* RaycastHit2D hitScan = Physics2D.Raycast(meleePoint.position, meleePoint.up, sightRange, whatIsPlayer);
+
+            if (hitScan.collider.CompareTag("Player"))
+            {
+                //Game over for our player character
+                playerCharacter.GetComponent<playerMovement>().GameOver();
+            }
+*/
+>>>>>>> Stashed changes
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenRangedAttack);
         }
@@ -1028,7 +1045,7 @@ public class EnemyAI : MonoBehaviour
         //playerCharacter = GameObject.Find("Player");
 
 
-        InvokeRepeating("GetPath", 0f, 0.5f);
+        InvokeRepeating("GetPath", 0f, 0.25f);
         startupState = this.enemyState;
 
     }
@@ -1073,8 +1090,43 @@ public class EnemyAI : MonoBehaviour
                 {
                     enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once
                     Patroling();
+                    speedFactor = 1f;
                 }
 
+<<<<<<< Updated upstream
+=======
+
+            }
+
+            if (enemyState == EnemyState.ATTACK)
+            {
+                speedFactor = 1.5f;
+                Attacking();
+            }
+
+            
+
+
+         /*   if (!weaponEquiped)
+            {
+
+                SetUnarmedState();
+                FindWeapon();
+            }*/
+
+           
+        }
+        /*if(enemyState == EnemyState.IDLE)
+        {
+            animation.SetBool("isWalking", false);
+        }*/
+
+        if (weaponEquiped)
+        {
+            if (rangedWeapon)
+            {
+                enemyAnimate.SetBool("hasGun", true);
+>>>>>>> Stashed changes
             }
             else
             {
