@@ -203,7 +203,7 @@ MonoBehaviour:
   enemyState: 1
   targetPosition: {fileID: 4866050391622851281}
   walkPoint: {x: 0, y: 0, z: 0}
-  speeed: 350
+  speeed: 200
   rotationSpeed: 750
   reachedEndOfPath: 0
   nextWayPointDistance: 0.5
@@ -227,7 +227,7 @@ MonoBehaviour:
     m_Bits: 512
   playerCharacter: {fileID: 0}
   meleePoint: {fileID: 8675396071803620000}
-  sightRange: 10
+  sightRange: 6
   meleeRange: 1
   inFieldOfView: 0
   playerInSightRange: 0
@@ -237,13 +237,13 @@ MonoBehaviour:
   rangedWeapon: 0
   isWeaponAround: 0
   referencePoint: {fileID: 3295525784932966192}
-  fov_Range: 90
+  fov_Range: 130
   turnRange: 2
   inTurnRange: 0
   walkPointSet: 0
   walkPointDistance: 0
-  maxRCLength: 30
-  infRayDist: 15
+  maxRCLength: 6
+  infRayDist: 4
   lastDirRay: 0
   nextDirRay: 0
   processingDest: 0
