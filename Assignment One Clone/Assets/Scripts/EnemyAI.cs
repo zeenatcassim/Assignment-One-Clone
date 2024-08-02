@@ -280,10 +280,11 @@ public class EnemyAI : MonoBehaviour
         enemySprite.color = enemyKnockedColor;
 
         isDowned = true;
-
+        enemyAnimate.SetBool("isWalking", false);
         DropWeapons();
 
         //Start Timer for them to get back up
+        
 
 
     }
@@ -1245,6 +1246,10 @@ public class EnemyAI : MonoBehaviour
             //enemyState = EnemyState.DOWNED;
 
             //rb.velocity = Vector2.zero;
+           
+            
+
+
             if (!finishEngaged)
             {
                 if (knockedDownTimer > downedTime)
@@ -1321,6 +1326,12 @@ public class EnemyAI : MonoBehaviour
             {
                 enemyAnimate.SetBool("hasMelee", true);
             }
+        }
+
+        if (!weaponEquiped)
+        {
+            enemyAnimate.SetBool("hasGun", false);
+            enemyAnimate.SetBool("hasMelee", false);
         }
 
 
