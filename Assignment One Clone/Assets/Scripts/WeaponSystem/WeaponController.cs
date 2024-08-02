@@ -10,6 +10,7 @@ public class WeaponController : MonoBehaviour
     [Header("Weapon Switching")]
     [SerializeField] bool canCollect = false;
     [SerializeField] int collected = 0;
+    [SerializeField] GameObject indicator;
 
 
     public int maxRounds;
@@ -48,5 +49,7 @@ public class WeaponController : MonoBehaviour
 
         if (collected == 1)
             this.transform.position = playerTransform.position;
+
+        indicator.SetActive(collected == 0);
     }
 }
