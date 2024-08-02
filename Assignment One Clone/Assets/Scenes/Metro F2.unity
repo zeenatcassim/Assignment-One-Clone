@@ -11653,8 +11653,8 @@ MonoBehaviour:
   weaponSpawnPoints:
   - {fileID: 1818662307}
   - {fileID: 1124546208}
-  BackGroundMusic: {fileID: 0}
-  AudioState: {fileID: 0}
+  BackGroundMusic: {fileID: 2099932268}
+  AudioState: {fileID: 11400000, guid: 44fc46ed1aba454449f7b4d7bb41f6ce, type: 2}
 --- !u!4 &1411149997
 Transform:
   m_ObjectHideFlags: 0
@@ -36789,6 +36789,68 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &2099932267
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3437482826385735276, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.13248104
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437482826385735276, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.0431294
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437482826385735276, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.09886661
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437482826385735276, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437482826385735276, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437482826385735276, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437482826385735276, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437482826385735276, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437482826385735276, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3437482826385735276, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5217107746924648601, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+      propertyPath: m_Name
+      value: SynthWave Music
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+--- !u!82 &2099932268 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: -4081081690581980197, guid: 7e5a0268d473f004582db1c18d531c22, type: 3}
+  m_PrefabInstance: {fileID: 2099932267}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2115155246
 GameObject:
   m_ObjectHideFlags: 0
@@ -36979,3 +37041,4 @@ SceneRoots:
   - {fileID: 499677202}
   - {fileID: 1160903125}
   - {fileID: 1787589481}
+  - {fileID: 2099932267}
