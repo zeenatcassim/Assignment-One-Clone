@@ -125,7 +125,7 @@ public class EnemyAI : MonoBehaviour
     public GameObject gunPrefab;
 
     //Animator 
-    public Animator animation; 
+    public Animator enemyAnimate;
 
 
     //Vector2 dropPosition;
@@ -201,13 +201,13 @@ public class EnemyAI : MonoBehaviour
         if (path == null)
         {
             // With no path, we are stationary
-            animation.SetBool("isWalking", false);
+            //animation.SetBool("isWalking", false);
             return;
 
         }
 
         //animate movement to targets
-        animation.SetBool("isWalking", true);
+        // animation.SetBool("isWalking", true);
 
         if (currentWayPoint + 1 >= path.vectorPath.Count)
         {
@@ -978,9 +978,9 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator AtkAnim()
     {
         //call our punch
-        animation.SetBool("punch",true);
+        enemyAnimate.SetBool("punch", true);
         yield return new WaitForSeconds(.5f);
-        animation.SetBool("punch", false);
+        enemyAnimate.SetBool("punch", false);
     }
 
 
@@ -1277,6 +1277,9 @@ public class EnemyAI : MonoBehaviour
         InvokeRepeating("GetPath", 0f, 0.5f);
         startupState = this.enemyState;
 
+
+
+
     }
 
     // Update is called once per frame
@@ -1306,8 +1309,11 @@ public class EnemyAI : MonoBehaviour
 
             if (seenPlayerTimer > forgetPlayerTime) //aftert this much time of not seeing the player, go back to patrolling
             {
+                if (enemyState != EnemyState.IDLE)
+                {
+                    enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once 
+                }
 
-                enemyState = EnemyState.PATROL; // Patrol if you have seen the player atleast once 
 
                 if (seenPlayerOnce)
                 {
@@ -1352,12 +1358,26 @@ public class EnemyAI : MonoBehaviour
         {
             if (rangedWeapon)
             {
-                animation.SetBool("hasGun",true);
+                enemyAnimate.SetBool("hasGun", true);
             }
             else
             {
-                animation.SetBool("hasMelee", true);
+                enemyAnimate.SetBool("hasMelee", true);
             }
+        }
+
+        /*if(enemyState == EnemyState.IDLE)
+        {
+            animation.SetBool("isWalking", false);
+        }*/
+
+        if (rb.velocity.magnitude > 0.05)
+        {
+            enemyAnimate.SetBool("isWalking", true);
+        }
+        else if (rb.velocity.magnitude <= 0.05)
+        {
+            enemyAnimate.SetBool("isWalking", false);
         }
 
     }
