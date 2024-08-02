@@ -18,10 +18,7 @@ public class playerShoot : MonoBehaviour
 
     public LayerMask whatIsComrade;
 
-    //nrOfRounds- int?
-
-  //  public GameObject playerPos;
-    //public GameObject enemyPos;
+    public AudioSource gunShot;
 
     // Start is called before the first frame update
     void Start()
@@ -60,8 +57,10 @@ public class playerShoot : MonoBehaviour
 
         picked.ammoAvailable--;
 
-        //play animation
+        //play animation??
         //sound
+        gunShot.Play();
+
         if (picked.ammoAvailable <=0)
         {
             //  picked.pickedUpGun = false;

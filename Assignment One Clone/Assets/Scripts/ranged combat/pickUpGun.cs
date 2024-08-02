@@ -39,7 +39,7 @@ public class pickUpGun : MonoBehaviour
     {
         gun = FindAnyObjectByType<gunAmmo>();
         shoot = FindAnyObjectByType<playerShoot>();
-       // canThrowGun = true;
+    
     }
 
     // Update is called once per frame
@@ -48,10 +48,10 @@ public class pickUpGun : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             if (canPickUpGun) //right mouse button
-            {
+            {  
+                gun.maxAmmo = ammoAvailable;
                 PickUpGun();
 
-                ammoAvailable = gun.maxAmmo;
 
             }
 
@@ -140,7 +140,7 @@ public class pickUpGun : MonoBehaviour
         ammoAvailable = 0;
         //Destroy(gunInstance);
         // gun = null;
-        pickedUpGun = true;
+        pickedUpGun = false;
 
         canThrowGun = true;
 
@@ -154,25 +154,51 @@ public class pickUpGun : MonoBehaviour
             Debug.Log("Gun instance is null");
             return;
         }
+        else
+        {
+            SpriteRenderer spriteRenderer = gunInstance.GetComponent<SpriteRenderer>();
 
+            if (spriteRenderer != null)
+            {
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+              //  gunInstance.transform.position = mousePosition;
+
+                StartCoroutine(MoveTowardsCursor(gunInstance.transform, mousePosition, 2f));
+
+                //Let enemy know they can probably pick up this gun now
+                equipedGun.UnEquipGun();
+
+               
+               
+            }
+            else
+            {
+                Debug.LogError("SpriteRenderer component not found on gunInstance.");
+            }
+
+        }
+   //gunInstance = null;      Destroy(gunInstance, 2f);    canThrowGun = false;    pickedUpGun = false;
+
+/*
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2 throwDirection = (mousePosition - (Vector2)transform.position).normalized;
 
-         Debug.Log(mousePosition);
+        // Debug.Log(mousePosition);
          Debug.Log(throwDirection);
 
         Debug.Log(gunInstance);
 
-       if (gunInstance.GetComponent<Rigidbody2D>() == null) { gunInstance.AddComponent<Rigidbody2D>(); }
+       if (gunInstance.GetComponent<Rigidbody2D>() == null) {
+            gunInstance.AddComponent<Rigidbody2D>(); }
+
         Rigidbody2D rb = gunInstance.GetComponent<Rigidbody2D>(); 
         Debug.Log(rb);
         
         if (rb != null)
         {
-            Debug.Log("can throw");
-           //  rb.AddForce(throwDirection * throwSpeed, ForceMode2D.Impulse);
-
+            Debug.Log("can throw");   //  rb.AddForce(throwDirection * throwSpeed, ForceMode2D.Impulse);
             rb.gravityScale = 0;
             rb.isKinematic = false;
             rb.velocity = throwDirection * throwSpeed;
@@ -193,9 +219,38 @@ public class pickUpGun : MonoBehaviour
         else
         {
             Debug.LogError("Failed to add or find Rigidbody2D on the gun instance.");
-        }
+        }*/
        
         
+    }
+
+    IEnumerator MoveTowardsCursor(Transform objTransform, Vector2 targetPosition, float duration)
+    {
+        if (gunInstance != null)
+        {
+            Vector2 startPosition = objTransform.position;
+            float timeElapsed = 0f;
+
+        while (timeElapsed < duration)
+        {
+                if (objTransform == null) yield break;
+               
+            objTransform.position = Vector2.Lerp(startPosition, targetPosition, timeElapsed / duration);
+            timeElapsed += Time.deltaTime;
+            
+            yield return null;
+        }
+
+            if (objTransform != null)
+            { objTransform.position = targetPosition;
+                Destroy(objTransform.gameObject, 1f);
+            }
+           
+         
+        }
+          gunInstance = null;
+            canThrowGun = false;
+            pickedUpGun = false;
     }
 
 }
