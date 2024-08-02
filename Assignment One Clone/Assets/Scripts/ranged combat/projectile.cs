@@ -22,5 +22,10 @@ public class projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (collision.collider.CompareTag("levelProps"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

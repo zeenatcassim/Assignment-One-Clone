@@ -13,9 +13,12 @@ GameObject:
   - component: {fileID: 895447053906591404}
   - component: {fileID: -5263174612488999798}
   - component: {fileID: 7998897349613498448}
+  - component: {fileID: 4539119171300944114}
+  - component: {fileID: 3231350573764382201}
+  - component: {fileID: 8571850844169085699}
   m_Layer: 0
   m_Name: Gun
-  m_TagString: Untagged
+  m_TagString: GunPickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,7 +122,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
-  indicator: {fileID: 7324559623321203923}
   canCollect: 0
   collected: 0
   maxRounds: 0
@@ -171,6 +173,59 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.62, y: 1.45}
   m_EdgeRadius: 0
+--- !u!114 &4539119171300944114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187373740964774847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e58a44726d68294dbe14efd5d69f238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmmo: 17
+--- !u!114 &3231350573764382201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187373740964774847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f9794476fe62164490954705005d527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEquiped: 0
+--- !u!50 &8571850844169085699
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187373740964774847}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &7324559623321203923
 GameObject:
   m_ObjectHideFlags: 0

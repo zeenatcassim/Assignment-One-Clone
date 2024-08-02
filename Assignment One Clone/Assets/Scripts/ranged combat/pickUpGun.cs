@@ -129,7 +129,7 @@ public class pickUpGun : MonoBehaviour
             pickedUpGun = true;
             canPickUpGun = false;
 
-          //  canThrowGun = true;
+           // canThrowGun = true;
         }
        
     }
@@ -142,7 +142,7 @@ public class pickUpGun : MonoBehaviour
         // gun = null;
         pickedUpGun = true;
 
-       // canThrowGun = true;
+        canThrowGun = true;
 
         //  if (Input.GetMouseButtonDown(1))  {  ThrowGunAtEnemy();  }
     }

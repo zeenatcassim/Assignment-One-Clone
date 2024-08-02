@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GunPickUp
   - enemyAI
+  - levelProps
   layers:
   - Default
   - TransparentFX

@@ -62,9 +62,10 @@ public class playerShoot : MonoBehaviour
 
         //play animation
         //sound
-        if (picked.ammoAvailable ==0)
+        if (picked.ammoAvailable <=0)
         {
             //  picked.pickedUpGun = false;
+            picked.ammoAvailable = 0;
             picked.AmmoDepleted();
         }
         else
@@ -78,7 +79,7 @@ public class playerShoot : MonoBehaviour
         RaycastHit2D[] hit = Physics2D.CircleCastAll(this.transform.position, 7f, Vector2.zero, 0, whatIsComrade);
         for (int i = 0; i < hit.Length; i++)
         {
-            if (hit[i].collider.CompareTag("Enemy"))
+            if (hit[i].collider.CompareTag("enemyAI"))
             {
                 GameObject gameObj = hit[i].collider.gameObject;
                 gameObj.GetComponent<EnemyAI>().GoToNoiseLocation(this.transform.position);
