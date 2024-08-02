@@ -45669,7 +45669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59c394965c8c9ff4fa2665ae3f98b661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 5
   rb: {fileID: 1763380396}
   cam: {fileID: 519420031}
   animator: {fileID: 1763380399}

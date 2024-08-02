@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class playerMovement : MonoBehaviour
 {
-    public float moveSpeed = 10f;
+    public float moveSpeed = 5f;
 
     public Rigidbody2D rb;
     public Camera cam;
@@ -27,7 +27,7 @@ public class playerMovement : MonoBehaviour
 
         bool isWalking = movement.sqrMagnitude > 0;
 
-        //animator.SetBool("isWalking", isWalking);
+        animator.SetBool("isWalking", isWalking);
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -100,7 +100,10 @@ public class playerMovement : MonoBehaviour
 
         // Update player rotation based on mouse position
         Vector2 lookDirection = mousePos - rb.position;
-        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-        rb.rotation = angle;
+        float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+
+        // Adjust this offset based on your sprite's default orientation
+        float rotationOffset = -360;  // Experiment with this value
+        rb.rotation = angle + rotationOffset;
     }
 }
