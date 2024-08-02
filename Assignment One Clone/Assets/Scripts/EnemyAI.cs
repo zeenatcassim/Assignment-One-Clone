@@ -1255,12 +1255,6 @@ public class EnemyAI : MonoBehaviour
             }
         }
 
-
-        /*if (enemyState == EnemyState.DOWNED && !finishEngaged)
-        {
-           
-        }*/
-
         else
         {
 
