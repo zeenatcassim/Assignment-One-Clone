@@ -133,6 +133,9 @@ public class EnemyAI : MonoBehaviour
     //Vector2 dropPosition;
     //public Transform defaultDropPosition; will use melee position instead
 
+    [Header("UI Score Update")]
+    [SerializeField] GameManager GameManager;
+
     void UpdatePath()
     {
         if (seeker.IsDone())
@@ -267,6 +270,9 @@ public class EnemyAI : MonoBehaviour
         enemyState = EnemyState.HURT;
 
         enemySprite.color = enemyDeadColor;
+
+        GameManager.ScoreController(100);
+
         Debug.Log("Player is hurt");
     }
 
@@ -283,8 +289,10 @@ public class EnemyAI : MonoBehaviour
         enemyAnimate.SetBool("isWalking", false);
         DropWeapons();
 
+        GameManager.ScoreController(250);
+
         //Start Timer for them to get back up
-        
+
 
 
     }
@@ -377,6 +385,7 @@ public class EnemyAI : MonoBehaviour
             return finishEngaged;
         }
 
+        GameManager.ScoreController(500);
     }
 
     public void EnemyDeath()
@@ -386,6 +395,8 @@ public class EnemyAI : MonoBehaviour
 
         enemyCollider.enabled = false;
         enemySprite.color = enemyDeadColor;
+
+        GameManager.ScoreController(1000);
     }
 
 

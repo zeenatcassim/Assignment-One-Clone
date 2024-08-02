@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ScoringDisplay : MonoBehaviour
@@ -12,16 +13,17 @@ public class ScoringDisplay : MonoBehaviour
         
     }
 
-    public void showScore()
+    public void showScore(int Score)
     {
         GameObject newCanvas = Instantiate(canvas);
+        newCanvas.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "+" + Score.ToString() + "pts";
         newCanvas.transform.position = GameObject.FindWithTag("Player").GetComponent<Transform>().position;
         StartCoroutine(deleteDisplay(newCanvas));
     }
 
     IEnumerator deleteDisplay(GameObject canvas)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         Destroy(canvas);
     }
 

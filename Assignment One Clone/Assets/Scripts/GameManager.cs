@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,12 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] ScoringDisplay scoreDisplay;
+
+    [Header("Score")]
+    [SerializeField] int overallScore = 0;
+    [SerializeField] TMP_Text text;
+    [SerializeField] GameData gameData;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,14 +37,26 @@ public class GameManager : MonoBehaviour
 
         if (AudioState.state)
             BackGroundMusic.Play();
+
+        ResetGameData(0);
+    }
+
+    public void ScoreController(int score)
+    {
+        scoreDisplay.showScore(score);
+
+        overallScore += score;
+        gameData.Score += overallScore;
+    }
+
+    public void ResetGameData(int data)
+    {
+        gameData.Score = data;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            scoreDisplay.showScore();
-        }
+        text.text = gameData.Score.ToString() + "pts";
     }
 }

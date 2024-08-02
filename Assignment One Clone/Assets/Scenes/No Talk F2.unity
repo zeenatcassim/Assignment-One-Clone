@@ -989,6 +989,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: GameManager
+      value: 
+      objectReference: {fileID: 766934039}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: maxRCLength
       value: 10
       objectReference: {fileID: 0}
@@ -3284,6 +3288,10 @@ PrefabInstance:
       propertyPath: enemyState
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: GameManager
+      value: 
+      objectReference: {fileID: 766934039}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: meleePrefab
       value: 
@@ -10175,6 +10183,9 @@ MonoBehaviour:
   BackGroundMusic: {fileID: 1620392606}
   AudioState: {fileID: 11400000, guid: 44fc46ed1aba454449f7b4d7bb41f6ce, type: 2}
   scoreDisplay: {fileID: 766934041}
+  overallScore: 0
+  text: {fileID: 824223230}
+  gameData: {fileID: 0}
 --- !u!4 &766934040
 Transform:
   m_ObjectHideFlags: 0
@@ -10359,6 +10370,10 @@ PrefabInstance:
       propertyPath: enemyState
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: GameManager
+      value: 
+      objectReference: {fileID: 766934039}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: meleePrefab
       value: 
@@ -11889,6 +11904,10 @@ PrefabInstance:
       propertyPath: enemyState
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: GameManager
+      value: 
+      objectReference: {fileID: 766934039}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: meleePrefab
       value: 
@@ -38127,6 +38146,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: GameManager
+      value: 
+      objectReference: {fileID: 766934039}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: maxRCLength
       value: 20
       objectReference: {fileID: 0}
@@ -40231,6 +40254,10 @@ PrefabInstance:
       propertyPath: enemyState
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: GameManager
+      value: 
+      objectReference: {fileID: 766934039}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: meleePrefab
       value: 

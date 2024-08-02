@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: +200PTS
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 856f22cf952a91e45b96ca464d7e6075, type: 2}
   m_sharedMaterial: {fileID: -6080847431364026221, guid: 856f22cf952a91e45b96ca464d7e6075, type: 2}
@@ -161,6 +161,7 @@ GameObject:
   - component: {fileID: 5129491598212753722}
   - component: {fileID: 2626303421809301229}
   - component: {fileID: 1885103083957783170}
+  - component: {fileID: 6683160491922293671}
   m_Layer: 6
   m_Name: Feedback-Points
   m_TagString: Untagged
@@ -233,7 +234,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1885103083957783170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,3 +252,16 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6683160491922293671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8386151372475591434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb3ae8732dc41b4e919c0f390805358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  step: 3
