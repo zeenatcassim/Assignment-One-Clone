@@ -5,6 +5,7 @@ using UnityEngine;
 public class playerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public float originalMoveSpeed; // To store the original move speed
 
     public Rigidbody2D rb;
     public Camera cam;
@@ -12,16 +13,45 @@ public class playerMovement : MonoBehaviour
     Vector2 movement;
     Vector2 mousePos;
 
+    public int bashCounter;
+    public bool isDown = false;
+
     public Animator animator;
+    public GameObject MeleeCollider;
 
     public LayerMask whatIsComrade;
 
+    public GameObject[] bloodPrefabs; // Array to hold different blood splatter prefabs
+    public int splatterCount = 5;
+    public float spread = 1f;
+
+    void Start()
+    {
+        originalMoveSpeed = moveSpeed; // Store the original move speed
+    }
+
+    public void SpawnBlood(Vector2 position)
+    {
+        for (int i = 0; i < splatterCount; i++)
+        {
+            Vector2 randomOffset = Random.insideUnitCircle * spread;
+            int randomIndex = Random.Range(0, bloodPrefabs.Length); // Randomly select a blood prefab
+            Instantiate(bloodPrefabs[randomIndex], position + randomOffset, Quaternion.Euler(0, 0, Random.Range(0f, 360f)));
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        if (!isDown)
+        {
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
+        }
+        else
+        {
+            movement = Vector2.zero; // Lock movement when isDown is true
+        }
 
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
@@ -33,59 +63,72 @@ public class playerMovement : MonoBehaviour
         {
             StartCoroutine(PunchAnim());
         }
+
+        if (isDown)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                bashCounter++;
+
+                SpawnBlood(transform.position);
+
+                if (bashCounter < 3)
+                {
+                    // Allow left click to go through
+                }
+
+                if (bashCounter == 3)
+                {
+                    enemyObj.GetComponent<EnemyAI>().EnemyDeath();
+                    Debug.Log("Enemy finished");
+                    bashCounter = 0;
+                    isDown = false;
+                    moveSpeed = originalMoveSpeed; // Unlock player movement
+                }
+            }
+        }
+
+        PlayerSideEngageFinisher();
     }
 
     private IEnumerator PunchAnim()
     {
-        Debug.Log("punch works");
         animator.SetBool("punch", true);
+        MeleeCollider.SetActive(true);
         yield return new WaitForSeconds(.5f);
         animator.SetBool("punch", false);
-
+        MeleeCollider.SetActive(false);
     }
 
+    public GameObject enemyObj;
 
     public void PlayerSideEngageFinisher()
     {
-
         if (Input.GetKeyDown(KeyCode.Space)) // lock out the function entry or something
         {
+            Debug.Log("Space");
+
             RaycastHit2D hit = Physics2D.CircleCast(transform.position, 3f, Vector2.zero, 0, whatIsComrade);
+            if (hit.collider != null && hit.collider.CompareTag("enemyAI"))
             {
-                if (hit.collider.CompareTag("Enemy"))
+                enemyObj = hit.collider.gameObject;
+
+                bool finisherEngaged = enemyObj.GetComponent<EnemyAI>().TakeFinisher();
+                if (finisherEngaged)
                 {
-                    GameObject enemyObj = hit.collider.gameObject;
+                    Debug.Log("Enemy Finishing");
+                    //enemyObj.transform.Find("EnemyCharacterGFX").GetComponent<SpriteRenderer>().color = Color.red;
 
-                    bool finisherEngaged = enemyObj.GetComponent<EnemyAI>().TakeFinisher();
-                    if (finisherEngaged)
-                    {
-                        //Call our function that will lock other controls until our enemy is dead.
+                    isDown = true;
 
-                    }
-                    else
-                    {
+                    // Set the player's position to the enemy's position
+                    transform.position = enemyObj.transform.position;
 
-                    }
+                    // Lock player movement
+                    moveSpeed = 0;
                 }
             }
-            //enemy
         }
-
-        /*if(bashCounter < bashesRequired)
-          {
-          some things are true
-
-
-          }
-          else if (bashCounter > basehesRequired)
-          {
-           things be false, call the TakeFinisher Function, avoid null reference error
-            
-
-          }
-
-           call a fucntion to reset counter and a nullify a game Object target. 
-         */
     }
 
     public void GameOver()
@@ -96,7 +139,7 @@ public class playerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         // Move the player
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.deltaTime);
+        rb.MovePosition(rb.position + movement * originalMoveSpeed * Time.deltaTime);
 
         // Update player rotation based on mouse position
         Vector2 lookDirection = mousePos - rb.position;
