@@ -396,6 +396,10 @@ public class EnemyAI : MonoBehaviour
         enemyCollider.enabled = false;
         enemySprite.color = enemyDeadColor;
 
+       
+        enemyAnimate.SetBool("isWalking", false);
+        enemyAnimate.SetBool("isDowned", true);
+
         GameManager.ScoreController(1000);
     }
 
