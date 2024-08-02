@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource BackGroundMusic;
     [SerializeField] AudioState AudioState;
 
+    [Header("UI")]
+    [SerializeField] ScoringDisplay scoreDisplay;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            scoreDisplay.showScore();
+        }
     }
 }
