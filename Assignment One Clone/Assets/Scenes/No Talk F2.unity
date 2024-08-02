@@ -871,6 +871,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 255048370}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
       objectReference: {fileID: 1763380398}
@@ -1269,7 +1273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 336478053}
   - component: {fileID: 336478054}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2465,7 +2469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 439468472}
   - component: {fileID: 439468471}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2701,6 +2705,10 @@ PrefabInstance:
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 508198595}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
@@ -3154,7 +3162,7 @@ GameObject:
   - component: {fileID: 640040864}
   - component: {fileID: 640040863}
   - component: {fileID: 640040865}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9198,7 +9206,7 @@ GameObject:
   - component: {fileID: 661951849}
   - component: {fileID: 661951848}
   - component: {fileID: 661951847}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MeleeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9531,6 +9539,10 @@ PrefabInstance:
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 783229758}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
@@ -10416,7 +10428,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1279278423}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: fireSpot
   m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
@@ -10688,6 +10700,10 @@ PrefabInstance:
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 1389122348}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
@@ -36917,6 +36933,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 1507197891}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
       objectReference: {fileID: 1763380398}
@@ -37484,9 +37504,9 @@ GameObject:
   - component: {fileID: 1763380395}
   - component: {fileID: 1763380394}
   - component: {fileID: 1763380399}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38435,6 +38455,10 @@ PrefabInstance:
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 2011933697}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 

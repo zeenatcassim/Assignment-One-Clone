@@ -3284,7 +3284,7 @@ GameObject:
   - component: {fileID: 300653560}
   - component: {fileID: 300653562}
   - component: {fileID: 300653561}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MeleeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3532,6 +3532,10 @@ PrefabInstance:
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 366768948}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
@@ -3936,7 +3940,7 @@ GameObject:
   m_Component:
   - component: {fileID: 429325864}
   - component: {fileID: 429325863}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Props
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4222,6 +4226,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 482500059}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
       objectReference: {fileID: 518973094}
@@ -4472,6 +4480,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 499677205}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
       objectReference: {fileID: 518973094}
@@ -4569,7 +4581,7 @@ GameObject:
   - component: {fileID: 518973095}
   - component: {fileID: 518973101}
   - component: {fileID: 518973100}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -4886,7 +4898,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 595202770}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: fireSpot
   m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
@@ -5048,7 +5060,7 @@ GameObject:
   - component: {fileID: 661187940}
   - component: {fileID: 661187939}
   - component: {fileID: 661187941}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: levelProps
   m_Icon: {fileID: 0}
@@ -11069,6 +11081,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 1160903128}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
       objectReference: {fileID: 518973094}
@@ -11823,6 +11839,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 1450700999}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
       objectReference: {fileID: 518973094}
@@ -12077,6 +12097,10 @@ PrefabInstance:
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 8904949758536938043, guid: 42ead898796e88d42b6449f41abc7f02, type: 3}
+    - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
+      propertyPath: enemyAnimate
+      value: 
+      objectReference: {fileID: 1787589484}
     - target: {fileID: 7124519354018976869, guid: 55b952710a7e5944ebe22590af7bba7b, type: 3}
       propertyPath: targetPosition
       value: 
@@ -36857,7 +36881,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2121709910}
   - component: {fileID: 2121709911}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
