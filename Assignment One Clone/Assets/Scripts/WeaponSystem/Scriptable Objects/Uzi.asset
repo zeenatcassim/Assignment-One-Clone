@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Uzi
   m_EditorClassIdentifier: 
   weaponName: Uzi
-  type: 
+  type: Ranged
   damage: 10
-  loadTime: 0
-  rounds: 0
-  roundDelay: 0
+  reloadTime: 1
+  maxAmmo: 15
+  rounds: 1
+  roundDelay: 1
+  sprite: {fileID: 1756020396, guid: 527dac88e829bfc45b7c69a58ec199c9, type: 3}
