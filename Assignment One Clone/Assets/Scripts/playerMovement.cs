@@ -172,12 +172,20 @@ public class playerMovement : MonoBehaviour
 
     public void GameOver()
     {
+        StartCoroutine(KillPause());
+    }
+
+
+    private IEnumerator KillPause()
+    {
         Debug.Log("Player Would have died/Respawned");
         isDead = true;
+        animator.SetBool("isDowned", true);
+
+        yield return new WaitForSeconds(.7f);
 
         gameOverScreen.SetActive(true);
         Time.timeScale = 0f;
-
     }
 
     private void FixedUpdate()
