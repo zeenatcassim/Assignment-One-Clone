@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] ScoringDisplay scoreDisplay;
 
     [Header("Score")]
-    [SerializeField] int overallScore = 0;
+    public int overallScore = 0;
     [SerializeField] TMP_Text text;
     [SerializeField] GameData gameData;
 

@@ -35,10 +35,15 @@ public class playerMovement : MonoBehaviour
 
     private bool isPaused = false;
 
+    [Header("Restart UI")]
+    [SerializeField] GameManager gameManager;
+
     void Start()
     {
         originalMoveSpeed = moveSpeed; // Store the original move speed
         pauseScreen.SetActive(false); // Ensure pause screen is initially hidden
+
+        gameOverScreen.SetActive(false);
     }
 
     public void SpawnBlood(Vector2 position)
@@ -106,6 +111,8 @@ public class playerMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
+                gameOverScreen.SetActive(false);
+                Time.timeScale = 1f;
                 SceneManager.LoadScene("No Talk F2");
             }
         }
@@ -167,6 +174,10 @@ public class playerMovement : MonoBehaviour
     {
         Debug.Log("Player Would have died/Respawned");
         isDead = true;
+
+        gameOverScreen.SetActive(true);
+        Time.timeScale = 0f;
+
     }
 
     private void FixedUpdate()
